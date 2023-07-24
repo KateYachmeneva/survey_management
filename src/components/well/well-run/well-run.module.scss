@@ -1,0 +1,156 @@
+%font__properties {
+  font-size: 14px;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.wellact__box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.wellact__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.wellact__field {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 26px;
+  padding-bottom: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 600px;
+}
+
+.wellact__number {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 21px;
+  padding-bottom: 10px;
+}
+
+.wellact__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 21px;
+  padding-bottom: 10px;
+}
+
+.wellact__date {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 21px;
+  text-align: right;
+}
+
+.wellact__status {
+  margin: 0;
+  color: var(--colors-interface-yellow);
+}
+
+.wellact__acts {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-bottom: 52px;
+}
+
+.wellact__report {
+  display: flex;
+  gap: 100px;
+}
+
+.wellact__stat {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+}
+
+.wellact__letter {
+  display: flex;
+  gap: 110px;
+}
+
+.wellact__text {
+  @extend %font__properties;
+}
+
+.wellact__run {
+  display: flex;
+  align-items: center;
+}
+
+.wellact__runnumber {
+  padding: 0;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 26px;
+  padding: 0 10px;
+  min-width: 80px;
+  margin-left: 10px;
+}
+
+.announcement {
+  padding: 0 0 0.88rem;
+  margin: 0 0 0.88rem;
+  border-bottom: 1px solid rgb(226, 226, 226);
+}
+button {
+  position: relative;
+  padding: 0.375rem 0.88rem;
+  color: #333;
+  background-color: #ddd;
+  border-color: #ddd;
+  font-weight: 400;
+  text-align: left;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+button:hover {
+  color: #fff;
+  background-color: #0069d9;
+}
+button.active {
+  color: #fff;
+  background-color: #0069d9;
+}
+.dropdown {
+  position: absolute;
+  top: 38px;
+  left: -1px;
+  border: 1px solid rgb(197, 197, 197);
+  background: #fff;
+  padding: 0;
+  color: #0062cc;
+  text-align: left;
+  border-radius: 0.25rem;
+}
+.dropdown > p {
+  margin: 0;
+  padding: 0.375rem 0.88rem;
+  border-bottom: 1px solid rgb(235, 235, 235);
+  min-width: 140px;
+}
+.dropdown > p:hover {
+  color: #fff;
+  background-color: #0062cc;
+}
+.dropdown > p:last-child {
+  border-bottom: 0 none;
+}
