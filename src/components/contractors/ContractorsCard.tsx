@@ -25,13 +25,14 @@ export interface ICardProps {
 }
 
 const ContractorsCard: React.FC<ICardProps> = ({ contractor }) => {
+ 
   const { allWells } = useSelector((store) => store.wells)
+
   const contractorWells = allWells.filter(
-    (well) => +well.contractorNNB === contractor.id
-  )
-
-  const drillingWells = contractorWells.filter((well) => well.status_drilling  === "ACTV")
-
+    (well) => (well.contractorNNB === `${contractor.dd_contractor_name} `))
+  
+ const drillingWells = contractorWells.filter((well) => well.status_drilling  === "ACTV")
+  
   const pendingWells = contractorWells.filter((well) => well.status_drilling  === "PLAN")
 
   const completedWells = contractorWells.filter(
@@ -45,8 +46,8 @@ const ContractorsCard: React.FC<ICardProps> = ({ contractor }) => {
     <section className={styles.contractors}>
       <div className={styles.contractors__header}>
         <div className={styles.contractors__title}>
-          {getLogo(contractor.name)}
-          <h2 className={styles.contractors__name}>{contractor.name}</h2>
+          {getLogo(contractor.dd_contractor_name)}
+          <h2 className={styles.contractors__name}>{contractor.dd_contractor_name}</h2>
         </div>
         <p className={styles.contractors__all}>
           Всего скважин{" "}
@@ -66,7 +67,7 @@ const ContractorsCard: React.FC<ICardProps> = ({ contractor }) => {
           <ul className={styles.wells__list}>
             {drillingWells
               ? drillingWells.map((well) => (
-                  <WellItem key={well.id} name={contractor.name} well={well} />
+                  <WellItem key={well.id} name={contractor.dd_contractor_name} well={well} />
                 ))
               : null}
           </ul>
@@ -81,7 +82,7 @@ const ContractorsCard: React.FC<ICardProps> = ({ contractor }) => {
           <ul className={styles.wells__list}>
             {pendingWells
               ? pendingWells.map((well) => (
-                  <WellItem key={well.id} name={contractor.name} well={well} />
+                  <WellItem key={well.id} name={contractor.dd_contractor_name} well={well} />
                 ))
               : null}
           </ul>
@@ -96,7 +97,7 @@ const ContractorsCard: React.FC<ICardProps> = ({ contractor }) => {
           <ul className={styles.wells__list}>
             {completedWells
               ? completedWells.map((well) => (
-                  <WellItem key={well.id} name={contractor.name} well={well} />
+                  <WellItem key={well.id} name={contractor.dd_contractor_name} well={well} />
                 ))
               : null}
           </ul>

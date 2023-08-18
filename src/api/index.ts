@@ -4,6 +4,7 @@ import { IRigData } from "../services/slices/rigSlice"
 import { IRunData } from "../services/slices/runSlice"
 import {
   IContractorsResponse,
+  IFieldsResponse,
   TAddContractor,
   IWellsResponse,
   ICustomerData,
@@ -79,25 +80,32 @@ export const logoutUserRequesrApi = () => {
   })
 }
 
-export const getUserDataApi = () => {
-  return fetchWithRefresh<TGetUserInfo>(`${API_URL}/users/profile/`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json;charger=utf-8",
-      Authorization: "Bearer " + getCookie("Token"),
-    },
-  })
-}
+// export const getUserDataApi = () => {
+//   return fetchWithRefresh<TGetUserInfo>(`${API_URL}/users/profile/`, {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json;charger=utf-8",
+//       Authorization: "Bearer " + getCookie("Token"),
+//     },
+//   })
+// }
 
 export const getContractorsRequestApi = () => {
-  return apiRequest<IContractorsResponse[]>(`${API_URL}/services/`, {
+  return apiRequest<IContractorsResponse[]>(`${API_URL}/contractorNNB`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
     },
   })
 }
-
+export const getFieldRequestApi = () => {
+  return apiRequest<IFieldsResponse[]>(`${API_URL}/field`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+}
 export const addContractorRequestApi = ({ name }: TAddContractor) => {
   return apiRequest<IContractorsResponse>(`${API_URL}/services/`, {
     method: "POST",
@@ -163,7 +171,7 @@ export const getWellsRequestApi = () => {
 }
 
 export const getCustomersRequestApi = () => {
-  return apiRequest<ICustomerData[]>(`${API_URL}/customers/`, {
+  return apiRequest<ICustomerData[]>(`${API_URL}/client`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json;charger=utf-8",

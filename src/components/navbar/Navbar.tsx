@@ -4,7 +4,7 @@ import styles from "./navbar.module.scss"
 type TData = {
   id: number
   well_name?: string
-  drill_contractor_name?: string
+  dd_contractor_name?: string
   full_name?: string
   email?: string
   phone?: string
@@ -29,7 +29,7 @@ const Navbar: React.FC<TCompaniesArray> = ({
   handleClick,
   activeWell,
 }) => {
-  console.log(data)
+
   return (
     <div className={styles.navbar}>
       <div className={styles.navbar__items}>
@@ -43,7 +43,7 @@ const Navbar: React.FC<TCompaniesArray> = ({
             }
             onClick={() => handleClick(item.id)}
           >
-            {item.drill_contractor_name && item.drill_contractor_name}
+            {item.dd_contractor_name && item.dd_contractor_name}
             {item.well_name && item.well_name}
             {item.full_name && item.full_name}
           </div>

@@ -15,21 +15,25 @@ export interface ICardProps<T> {
 
 export interface IContractorsResponse {
   id: number
-  name: string
+  dd_contractor_name: string
   email: string
   phone: string
+}
+export interface IFieldsResponse {
+  id: number,
+  field:string
 }
 
 export interface IContractorData {
   id: number
-  name: string
+  dd_contractor_name: string
   email: string
   phone: string
 }
 
 export interface ICustomerData {
   id: number
-  name: string
+  full_name: string
   color?: string
   slug?: string
 }
@@ -58,13 +62,23 @@ export interface ICustomInputProps<T> {
   label: string
   extraLabel?: string
   name?: string
-  value?: string | number
+  value?: string | number |  string[] 
+  value_status?:string[]
   placeholder?: string
   data?: string[]
   blue?: boolean
-  onChange: (e: React.ChangeEvent<T>) => void
+  setValue?: any
+  statusArr?: any
+  generalArr?: any
+  staticArr?: any
+  customersArr?: any
+  padsArr?: any
+  id?: string
+  onChange?: (e: React.ChangeEvent<T>) => void
+  onChangeField?: (e: React.ChangeEvent<T>) => void
   setShowLogin?: (show: boolean) => void
   setShowResetPass?: (show: boolean) => void
+  children?:Node
 }
 
 export interface IWellsResponse {
@@ -100,7 +114,9 @@ export interface IWellsResponse {
   T3_end: string
   critical_azimuth: boolean
   comment: string
-  pad_name: number
+  mail_To: string
+  mail_Cc: string
+  pad_name:number
   }
 
 export type TAddWell = Omit<IWellData, "id">

@@ -1,10 +1,11 @@
 import React, { useEffect } from "react"
 import { Route, Routes } from "react-router-dom"
 import { useDispatch } from "../../services/hooks"
-import { checkUserAuth } from "../../services/slices/getUserDataSlice"
+// import { checkUserAuth } from "../../services/slices/getUserDataSlice"
 import { getAllContractors } from "../../services/slices/contractorsSlice"
 import { getAllWells } from "../../services/slices/wellsSlice"
 import { getAllCustomers } from "../../services/slices/customersSlice"
+import { getAllFields } from "../../services/slices/fieldSlice"
 import { getAllRigs } from "../../services/slices/rigSlice"
 import { getRun } from "../../services/slices/runSlice"
 import "./app.module.scss"
@@ -33,11 +34,12 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(checkUserAuth())
+    // dispatch(checkUserAuth())
     dispatch(getAllCustomers())
     dispatch(getAllContractors())
     dispatch(getAllRigs())
     dispatch(getAllWells())
+     dispatch(getAllFields())
     // dispatch(getRun())
   }, [dispatch])
   return (

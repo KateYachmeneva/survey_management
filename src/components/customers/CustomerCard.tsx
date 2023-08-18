@@ -26,7 +26,7 @@ const CustomerCard: React.FC<ICustomerChartData> = ({ customer }) => {
       <div className={styles.contractors__header}>
         <div className={styles.contractors__title}>
           <LogoIcon />
-          <h2 className={styles.contractors__name}>{customer.name}</h2>
+          <h2 className={styles.contractors__name}>{customer.full_name}</h2>
         </div>
         <p className={styles.contractors__all}>
           Всего скважин{" "}

@@ -41,23 +41,23 @@
     0 10px 20px -5px rgba(0, 0, 0, 0.4);
 }
 
-.custom-scroll {
-  scrollbar-width: thin;
-  scrollbar-color: #939faebf transparent;
+.custom- {
+  bar-width: thin;
+  bar-color: #939faebf transparent;
 }
 
-.custom-scroll::-webkit-scrollbar {
+.custom-::-webkit-bar {
   width: 12px;
 }
 
-.custom-scroll::-webkit-scrollbar-thumb {
+.custom-::-webkit-bar-thumb {
   border-radius: 10px;
   background-color: rgba(147, 159, 174, 0.75);
   border: 3px solid transparent;
   background-clip: padding-box;
 }
 
-.custom-scroll::-webkit-scrollbar-thumb:hover {
+.custom-::-webkit-bar-thumb:hover {
   background-color: rgba(147, 159, 174, 1);
 }
 

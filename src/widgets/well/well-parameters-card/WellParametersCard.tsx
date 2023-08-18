@@ -23,6 +23,7 @@ const WellParametersCard: React.FC<IWellData> = ({
   dec,
   grid_convergence,
   critical_azimuth,
+  
 }) => {
   return (
     <>
@@ -111,7 +112,7 @@ const WellParametersCard: React.FC<IWellData> = ({
             </p>
           </li>
           <li className={styles.parameters__row}>
-            <p className={styles.parameters__parameter}>Gtotal, нТл</p>
+            <p className={styles.parameters__parameter}>Gtotal, G</p>
             <p className={styles.parameters__data}>
               {gtotal ? gtotal : "Нет данных"}
             </p>

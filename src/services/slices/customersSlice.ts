@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { ICustomerData } from "../../types"
+import { ICustomerData} from "../../types"
 import { getCustomersRequestApi } from "../../api"
 import { setError } from "./appSlice"
 import { CODES } from "../../utils/errors"
@@ -19,7 +19,7 @@ interface ICustomerSlice {
 }
 
 const initialState: ICustomerSlice = {
-  colors: ["#FED602", "#FF8863", "#4DC3F7", "#8DDA71", "#BD65A4", "#3682DB"],
+  colors: ["#FED602", "#FF8863", "#4DC3F7", "#8DDA71", "#BD65A4", "#3682DB", "#cb89ff", "#ff7f00", "#fc8dc0","#c2f50d","#fe4f4c","#724c7f","#ffff89"],
   getCustomerRequest: false,
   getCustomerSuccess: false,
   getCustomerFailed: false,
@@ -54,7 +54,7 @@ export const getCustomersSlice = createSlice({
           value: 0,
           color: "",
         }
-        chartWells["name"] = customer["name"]
+        chartWells["name"] = customer["full_name"]
         chartWells["value"] = customer["wells"]
         chartWells["color"] = state.colors[index]
         customersForChart.push(chartWells)

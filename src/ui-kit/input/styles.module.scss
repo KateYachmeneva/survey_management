@@ -14,7 +14,7 @@ $colors: (
   border: none;
   font-size: 14px;
   font-weight: 500;
-  width: inherit;
+  width: 99%;
   outline: none;
   text-indent: 1rem;
 }
@@ -22,13 +22,14 @@ $colors: (
 .input {
   @extend %custom-input;
   &:focus {
-    outline: 1px solid var(--colors-interface-blue);
+    outline: 3px solid var(--colors-interface-yellow);
   }
 }
 
 @mixin group($mb) {
-  width: inherit;
+  width: 99%;
   margin-bottom: $mb;
+  margin-left: 3px;
 }
 
 .input_group {

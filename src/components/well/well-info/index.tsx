@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom"
+import React, { useState } from "react"
 import styles from "./well-info.module.scss"
 import { Document, Envelop } from "../../../ui-kit/svg/icons"
 import { useSelector, useDispatch } from "../../../services/hooks"
@@ -6,10 +7,17 @@ import { openModal, closeModal } from "../../../services/slices/modalSlice"
 import Button from "../../../ui-kit/buttons/Button"
 import Modal from "../../../ui-kit/modal/Modal"
 import WellTuneModal from "../../modals/WellTuneModal"
+import { IRunData } from "../../../services/slices/runSlice"
+import DropDown from "./DropDown/DropDown";
 
 export const WellInfo = () => {
   const { activeDataWell } = useSelector((store) => store.wells)
+  console.log(activeDataWell);
   const { isOpen } = useSelector((store) => store.modal)
+  const { allRuns } = useSelector((store) => store.runs)
+  const [showDropDown, setShowDropDown] = useState<boolean>(false)
+  const [selectRun, setSelectRun] = useState<IRunData>();
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -20,6 +28,19 @@ export const WellInfo = () => {
   const handleCloseModal = () => {
     dispatch(closeModal())
   }
+  const toggleDropDown = () => {
+    setShowDropDown(!showDropDown);
+  };
+  const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
+    if (event.currentTarget === event.target) {
+      setShowDropDown(false);
+    }                   
+  }; 
+
+  const runSelection = (runId:number): void => {
+    const selectedRun = allRuns.find((item) => item.id === runId);
+    setSelectRun(selectedRun);
+   };
 
   return (
     <>
@@ -48,6 +69,7 @@ export const WellInfo = () => {
           <p className={styles.wellact__date}>{activeDataWell?.geomagnetic_date }</p>
         </div>
       </div>
+      
       <div className={styles.wellact__acts}>
         <p className={styles.wellact__title}>Действия</p>
         <div className={styles.wellact__report}>

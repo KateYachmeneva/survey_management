@@ -5,8 +5,9 @@
 }
 
 @mixin group($mb) {
-    width: 99%;
+    width: 99.5%;
     margin-bottom: $mb;
+    margin-left:3px;
 }
 
 $colors: (
@@ -16,18 +17,18 @@ $colors: (
 
 %custom-label {
     font-weight: 500;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 %custom-select {
     @include appearance(none);
-    height: 50px;
+    height: 40px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
     border: none;
     border-radius: 5px !important;
     font-size: 16px;
     font-weight: 500;
-    width: 99%;
+    width: inherit;
     outline: none;
     text-indent: 1rem;
     background: url(../../svg/arrow.svg) no-repeat right;

@@ -10,18 +10,19 @@ import { WellTable } from "../../widgets/well-table/WellTable"
 import styles from "./well-info.module.scss"
 import WellNavbar from "./navbar/WellNavbar"
 import { selectActiveDataWell } from "../../services/slices/wellsSlice"
+import DropDown from "./DropDown/DropDown";
 
 const WellData = () => {
   const [currentWell, setCurrentWell] = useState<IWellData>()
-  const [selectRun, setSelectRun] = useState<IRunData>();
   const { allWells } = useSelector((store) => store.wells)
   const dispatch = useDispatch()
   const location = useLocation()
-
+  const { allRuns } = useSelector((store) => store.runs)
+  const [showDropDown, setShowDropDown] = useState<boolean>(false)
+  const [selectRun, setSelectRun] = useState<IRunData>();
   const wellId = useParams().id?.split(":")[1]
-  const selectedRun = JSON.parse(localStorage.getItem('selectedRun') || '{}');
+  
 
-  console.log(selectedRun)
   useEffect(() => {
     
     if (wellId) {
@@ -30,16 +31,39 @@ const WellData = () => {
       dispatch(selectActiveDataWell(well))
     }
   }, [wellId])
- 
+
   if (!currentWell) {
     return <h1>Нажмите на другую ссылку или дождитесь загрузки данных</h1>
   }
+  const toggleDropDown = () => {
+    setShowDropDown(!showDropDown);
+  };
+  const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
+    if (event.currentTarget === event.target) {
+      setShowDropDown(false);
+    }                   
+  }; 
+
+  const runSelection = (runId:number): void => {
+    const selectedRun = allRuns.find((item) => item.id === runId);
+    setSelectRun(selectedRun);
+     };
+   ;
+    if(selectRun===undefined){
+      setSelectRun(allRuns[0]);   
+     }
+  
+     
+
   return (
     <>
-      <WellNavbar />
+       <WellNavbar />
       <div className={styles.container}>
-        <div className={styles.welldata}>
-          <WellInfoCard {...currentWell} />
+
+      <div className={styles.welldata}>
+          <WellInfoCard selectRun = {selectRun}
+                        selectWell = {currentWell}
+                          />
         </div>
         <div className={styles.chart}>
           <PieChartWithoutHeader
@@ -49,7 +73,26 @@ const WellData = () => {
           />
         </div>
         <div className={styles.wellact}>
-          <Outlet />
+        <div className={styles.wellact__run}>
+        <button
+        className={showDropDown ? styles.active : undefined}
+        onClick={(): void => toggleDropDown()}
+        onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
+          dismissHandler(e)
+        }
+      >
+        <div>{selectRun ? "Выбран рейс: " + selectRun.run_number : `Рейс: ${ allRuns[0].run_number}`} </div>
+        {showDropDown && (
+          <DropDown
+            runs={allRuns}
+            showDropDown={false}
+            toggleDropDown={(): void => toggleDropDown()}
+            runSelection={runSelection}
+                      />
+        )}
+      </button>
+      </div>
+        <Outlet />
         </div>
         <div className={styles.parameters}>
           {(location.pathname.includes("/info") ||

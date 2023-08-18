@@ -21,7 +21,7 @@ const ContractorDeleteModal: React.FC = () => {
     e.preventDefault()
     if (values.name) {
       const contractorToDelete = allContractors.find(
-        (contractor) => contractor.name === values.name
+        (contractor) => contractor.dd_contractor_name === values.name
       )
       if (contractorToDelete) {
         dispatch(deleteContractor(contractorToDelete.id))

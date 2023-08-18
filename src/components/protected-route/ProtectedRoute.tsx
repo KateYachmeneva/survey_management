@@ -12,14 +12,14 @@ interface locationStateProps {
 }
 
 const ProtectedRoute: FC<IAuth> = ({ onlyUnAuth = false, children }) => {
-  const { authChecked } = useSelector((store) => store.auth)
+  // const { authChecked } = useSelector((store) => store.auth)
   const { email } = useSelector((store) => store.userData)
   const location = useLocation()
   const myState: locationStateProps = location.state as locationStateProps
 
-  if (!authChecked) {
-    return <h1>Данные загружаются!</h1>
-  }
+  // if (!authChecked) {
+  //   return <h1>Данные загружаются!</h1>
+  // }
 
   if (onlyUnAuth && email) {
     const { from } = myState || { from: { pathname: "/" } }

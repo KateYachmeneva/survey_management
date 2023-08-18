@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { AppDispatch } from "../store"
-import { getUserDataApi } from "../../api"
+// import { getUserDataApi } from "../../api"
 import { setUserData } from "./userSlice"
 import { getCookie } from "../../utils"
 
@@ -18,56 +18,57 @@ const initialState: IUserDataSlice = {
   authChecked: false,
 }
 
-export const getUserInfo = createAsyncThunk(
-  "userInfo/getUserInfo",
-  async (_, { dispatch, rejectWithValue }) => {
-    try {
-      const response = await getUserDataApi()
-      dispatch(setUserData(response))
-      return response
-    } catch (error) {
-      return rejectWithValue(error)
-    }
-  }
-)
+// export const getUserInfo = createAsyncThunk(
+//   "userInfo/getUserInfo",
+//   async (_, { dispatch, rejectWithValue }) => {
+//     try {
+//       const response = await getUserDataApi()
+//       dispatch(setUserData(response))
+//       return response
+//     } catch (error) {
+//       return rejectWithValue(error)
+//     }
+//   }
+// )
 
-export const getUserInfoSlice = createSlice({
-  name: "userInfo",
-  initialState,
-  reducers: {
-    authChecked: (state) => {
-      state.authChecked = true
-    },
-  },
-  extraReducers(builder) {
-    builder.addCase(getUserInfo.pending, (state) => {
-      state.getUserDataRequest = true
-      state.getUserDataSuccess = false
-      state.getUserDataError = false
-    })
-    builder.addCase(getUserInfo.fulfilled, (state) => {
-      state.getUserDataRequest = false
-      state.getUserDataSuccess = true
-      state.getUserDataError = false
-    })
-    builder.addCase(getUserInfo.rejected, (state) => {
-      state.getUserDataRequest = false
-      state.getUserDataSuccess = false
-      state.getUserDataError = true
-    })
-  },
-})
+// export const getUserInfoSlice = createSlice({
+//   name: "userInfo",
+//   initialState,
+//   reducers: {
+//     authChecked: (state) => {
+//       state.authChecked = true
+//     },
+//   },
+//   extraReducers(builder) {
+//     builder.addCase(getUserInfo.pending, (state) => {
+//       state.getUserDataRequest = true
+//       state.getUserDataSuccess = false
+//       state.getUserDataError = false
+//     })
+//     builder.addCase(getUserInfo.fulfilled, (state) => {
+//       state.getUserDataRequest = false
+//       state.getUserDataSuccess = true
+//       state.getUserDataError = false
+//     })
+//     builder.addCase(getUserInfo.rejected, (state) => {
+//       state.getUserDataRequest = false
+//       state.getUserDataSuccess = false
+//       state.getUserDataError = true
+//     })
+//   },
+// })
 
-export default getUserInfoSlice.reducer
-export const { authChecked } = getUserInfoSlice.actions
+// export default getUserInfoSlice.reducer
+// export const { authChecked } = getUserInfoSlice.actions
 
-export const checkUserAuth = () => async (dispatch: AppDispatch) => {
-  if (getCookie("Token")) {
-    try {
-      await dispatch(getUserInfo())
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  dispatch(authChecked())
-}
+// export const checkUserAuth = () => async (dispatch: AppDispatch) => {
+//   if (getCookie("Token")) {
+//     try {
+//       await dispatch(getUserInfo())
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   }
+//   dispatch(authChecked())
+// }
+export const getUserInfo = "d"

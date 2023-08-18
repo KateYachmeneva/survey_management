@@ -8,7 +8,7 @@ import { useDispatch } from "../../services/hooks"
 import styles from "./customers.module.scss"
 import PieChartComponent from "../../components/charts/PieChart"
 import BarChartComponent from "../../components/charts/BarChart"
-import { ICustomerData } from "../../types"
+import { ICustomerData} from "../../types"
 import { useSelector } from "../../services/hooks"
 import Modal from "../../ui-kit/modal/Modal"
 import { closeModal, openModal } from "../../services/slices/modalSlice"
@@ -22,6 +22,7 @@ const Customers: React.FC = () => {
   const [activeCompany, setActiveCompany] = useState<ICustomerData>(
     allCustomers[0]
   )
+  console.log(allCustomers[0])
   const [clickedButton, setClickedButton] = useState<string>("")
   const dispatch = useDispatch()
 
@@ -40,6 +41,7 @@ const Customers: React.FC = () => {
   const onClickHandler = (activeId: number) => {
     const selectedCompany = allCustomers.find((item) => item.id === activeId)
     if (selectedCompany) {
+      console.log(selectedCompany)
       setActiveCompany(selectedCompany)
     }
   }

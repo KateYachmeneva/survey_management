@@ -42,7 +42,10 @@ export interface IWellData {
   T3_end: string
   critical_azimuth: boolean
   comment: string
+  mail_To: string
+  mail_Cc: string
   pad_name:number
+  
  }
 
 export interface IWellChart {
@@ -189,7 +192,6 @@ export const wellsSlice = createSlice({
       state.getAllWellsSuccess = true
       state.getAllWellsFailed = false
       state.allWells = [...action.payload]
-      console.log(state.allWells)
       state.currentWell = [
         ...action.payload.filter((well) => well.status_drilling === "ACTV"),
       ][0]
@@ -231,6 +233,6 @@ function removeFilter(filter: string, appliedFilters: string[]) {
   return appliedFilters
 }
 
-function sortWells(field: keyof IWellData) {
-  return (a: IWellData, b: IWellData) => (a[field] > b[field] ? 1 : -1)
+function sortWells(field_name: keyof IWellData) {
+  return (a: IWellData, b: IWellData) => (a[field_name] > b[field_name] ? 1 : -1)
 }

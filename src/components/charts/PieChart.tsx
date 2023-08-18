@@ -16,7 +16,7 @@ type TChart = {
 }
 
 const PieChartComponent: React.FC<TChart> = ({ data }) => {
-  return (
+   return (
     <section className={cn(styles.chart, styles.chart__height_fix)}>
       <h2 className={styles.chart__title}>Скважин в бурении</h2>
       <ul className={styles.chart__list}>

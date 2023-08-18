@@ -32,6 +32,7 @@
   &__input {
     margin:  auto;
     width: 95%;
+    max-height:90vh;
     max-width: 1470px;
     color: black;
     overflow-y: auto;
@@ -49,6 +50,7 @@
   &__column {
     min-width: 250px;
     display: flex;
+    margin-right:20px;
     flex-direction: column;
   }
 }

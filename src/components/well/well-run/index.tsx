@@ -10,29 +10,7 @@ import styles from "./well-run.module.scss"
 export const WellRun = () => {
   const dispatch = useDispatch()
   const { activeDataWell } = useSelector((store) => store.wells)
-  const { allRuns } = useSelector((store) => store.runs)
-  const [showDropDown, setShowDropDown] = useState<boolean>(false)
-  const [selectRun, setSelectRun] = useState<IRunData>();
 
-
-  const toggleDropDown = () => {
-    setShowDropDown(!showDropDown);
-  };
-  const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
-    if (event.currentTarget === event.target) {
-      setShowDropDown(false);
-    }
-  };
-
-  const runSelection = (runId:number): void => {
-    const selectedRun = allRuns.find((item) => item.id === runId)
-    if (selectedRun) {
-      setSelectRun(selectedRun)       
-     localStorage.setItem('selectedRun', JSON.stringify(selectedRun));
-    //  console.log(selectedRun);
-    }
-  };
-// console.log(selectRun);
   return (
     <>
       <div className={styles.wellact__box}>
@@ -52,26 +30,7 @@ export const WellRun = () => {
           <p className={styles.wellact__date}>29.03.2023</p>
         </div>
       </div>
-      <div className={styles.wellact__run}>
-        <button
-        className={showDropDown ? styles.active : undefined}
-        onClick={(): void => toggleDropDown()}
-        onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
-          dismissHandler(e)
-        }
-      >
-        <div>{selectRun ? "Выбран рейс: " + selectRun.run_number : "Рейс: "} </div>
-        {showDropDown && (
-          <DropDown
-            runs={allRuns}
-            showDropDown={false}
-            toggleDropDown={(): void => toggleDropDown()}
-            runSelection={runSelection}
-                      />
-        )}
-      </button>
-      </div>
-      <div className={styles.wellact__acts}>
+       <div className={styles.wellact__acts}>
         <p className={styles.wellact__title}>Действия</p>
         <div className={styles.wellact__report}>
           <div className={styles.wellact__stat}>

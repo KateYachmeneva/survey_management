@@ -1,16 +1,18 @@
 .modal {
-  position: fixed;
+  position:absolute;
   top: 50%;
   left: 50%;
   width: 100%;
-  max-width: 500px;
+  max-width: 700px;
   padding: 24px 24px;
   transform: translate(-50%, -50%);
   border-radius: var(--common-border-radius);
   box-shadow: var(--common-element-shadow);
   background-color: var(--colors-interface-white);
   user-select: none;
-  z-index: 100;
+ z-index:3;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   &__heading {
     display: flex;

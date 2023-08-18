@@ -7,6 +7,7 @@ import {
 } from "../../api"
 import { setError } from "./appSlice"
 import { CODES } from "../../utils/errors"
+import { useSelector } from "../../services/hooks"
 
 export interface IContractorChart {
   name: string
@@ -27,7 +28,7 @@ export type TContractorsInitialState = {
 }
 
 export const initialState: TContractorsInitialState = {
-  colors: ["#FED602", "#FF8863", "#4DC3F7", "#8DDA71", "#BD65A4", "#3682DB"],
+  colors: ["#FED602", "#FF8863", "#4DC3F7", "#8DDA71", "#BD65A4", "#3682DB", "#cb89ff", "#ff7f00", "#fc8dc0"],
   currentContractor: null,
   allContractors: [],
   contractorsForChart: [],
@@ -92,8 +93,9 @@ export const contractorsSlice = createSlice({
           value: 0,
           color: "",
         }
-        chartWells["name"] = contractor["name"]
-        chartWells["value"] = contractor["wells"]
+       
+        chartWells["name"] = contractor["dd_contractor_name"]
+        chartWells["value"] = 10
         chartWells["color"] = state.colors[index]
         contractorsForChart.push(chartWells)
         index++

@@ -81,8 +81,7 @@ export const runSlice = createSlice({
       state.getRunsSuccess = true
       state.getRunsFailed = false
       state.allRuns = [...action.payload]
-      console.log(state.allRuns)
-    })
+     })
     builder.addCase(getRun.rejected, (state) => {
       state.getRunsRequest = false
       state.getRunsSuccess = false

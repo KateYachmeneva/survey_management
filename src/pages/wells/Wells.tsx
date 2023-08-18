@@ -23,9 +23,9 @@ const Wells = () => {
   const [activeWell, setActiveWell] = useState<IWellData>(currentWell)
   const [clickedButton, setClickedButton] = useState<string>("")
   const dispatch = useDispatch()
-  
-  dispatch(getRun(activeWell.id))
-
+  if (activeWell.id){
+    dispatch(getRun(activeWell.id))
+  }
 
 
   const handleOpenModal = (e: SyntheticEvent) => {

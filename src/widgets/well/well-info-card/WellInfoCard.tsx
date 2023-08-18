@@ -3,35 +3,34 @@ import styles from "./well-info-card.module.scss"
 import { IWellData, IPadData } from "../../../services/slices/wellsSlice"
 import { useSelector } from "../../../services/hooks"
 
-const WellInfoCard: React.FC<IWellData> = ({
-  client_name,
-  pad_name,
-  contractorNNB,
-  well_name,
-  field_name,
-  id,
-  T1_start,
-  active_from,
+const WellInfoCard: React.FC<any> = ({
+  selectRun,
+  selectWell
  }) => {
 
-  const selectedRun = JSON.parse(localStorage.getItem('selectedRun') || '{}');
 
-  console.log(selectedRun)
   return (
     <>
+    <ul className={styles.welldata__info}> 
       <h2 className={styles.welldata__title}>Общая информация</h2>
-      <ul className={styles.welldata__info}>     
+           
       <li className={styles.welldata__item}>
           <p className={styles.welldata__name}>Месторождение</p>
-          <p className={styles.welldata__data_bold}>{field_name}{pad_name}_{well_name}</p>
+          <p className={styles.welldata__data_bold}> {selectWell.field_name}</p>
       </li>
       <li className={styles.welldata__item}>
           <p className={styles.welldata__name}>Куст_Скважина</p>
-          <p className={styles.welldata__data_bold}>{pad_name}_{well_name}</p>
+          <p className={styles.welldata__data_bold}>{selectWell.pad_name}_{selectWell.well_name}</p>
       </li>
+      <li className={styles.welldata__item}>
+          <p className={styles.welldata__name}>Рейс</p>
+          <p className={styles.welldata__data}>
+            <span className={styles.welldata__data_bold}>{selectRun.run_number}</span>
+          </p>
+        </li>
         <li className={styles.welldata__item}>
         <p className={styles.welldata__name}>Начало сопровождения</p>
-          <p className={styles.welldata__data_bold}>start_controldate</p>
+          <p className={styles.welldata__data_bold}>{selectRun.start_date}</p>
         </li>
         <li className={styles.welldata__item}>
           <p className={styles.welldata__name}>Текущий забой</p>
@@ -42,18 +41,12 @@ const WellInfoCard: React.FC<IWellData> = ({
         <li className={styles.welldata__item}>
           <p className={styles.welldata__name}>Секция</p>
           <p className={styles.welldata__data}>
-            <span className={styles.welldata__data_bold}>current_section</span>
+            <span className={styles.welldata__data_bold}>{selectRun.section}</span>
           </p>
         </li>
-        <li className={styles.welldata__item}>
-          <p className={styles.welldata__name}>Рейс</p>
-          <p className={styles.welldata__data}>
-            <span className={styles.welldata__data_bold}>{selectedRun.run_number}</span>
-          </p>
-        </li>
-        <li className={styles.welldata__item}>
+                <li className={styles.welldata__item}>
           <p className={styles.welldata__name}>Подрядчик</p>
-          <p className={styles.welldata__data_bold}>{contractorNNB}</p>
+          <p className={styles.welldata__data_bold}>{selectWell.contractorNNB}</p>
         </li>
         <li className={styles.welldata__item}>
           <p className={styles.welldata__name}>ТС</p>
@@ -65,7 +58,7 @@ const WellInfoCard: React.FC<IWellData> = ({
         </li>
         <li className={styles.welldata__item}>
           <p className={styles.welldata__name}>SAG</p>
-          <p className={styles.welldata__data_bold}>telesystem_number</p>
+          <p className={styles.welldata__data_bold}>{selectRun.sag}</p>
         </li>
         {/* 
         <li className={styles.welldata__item}>

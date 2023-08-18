@@ -29,7 +29,7 @@
 
 .welldata {
   width: 335px;
-  max-height: 500px;
+  max-height: 545px;
   box-shadow: 0px 0px 10px rgba($color: black, $alpha: 0.25);
   border-radius: 10px;
   margin-top: 30px;
@@ -47,6 +47,7 @@
 }
 
 .wellact {
+  position: relative;
   grid-area: wellact;
   margin: 30px 0 0 0;
 
@@ -126,4 +127,12 @@
 
 .parameters {
   grid-area: parameters;
+}
+.wellact__run {
+  display: flex;
+  justify-content: center;
+  position:absolute;
+  align-items: center;
+  margin-top: 15px;
+  top: 58px; left: 70px;
 }
