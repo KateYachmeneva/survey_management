@@ -1,32 +1,32 @@
-import React, { useEffect, FC, ReactNode } from "react"
-import cn from "classnames"
-import styles from "./modal.module.scss"
-import ReactDOM from "react-dom"
-import ModalOverlay from "../modal-overlay/ModalOverlay"
-import { CloseIcon } from "../icons"
+import React, { useEffect, FC, ReactNode } from "react";
+import cn from "classnames";
+import styles from "./modal.module.scss";
+import ReactDOM from "react-dom";
+import ModalOverlay from "../modal-overlay/ModalOverlay";
+import { CloseIcon } from "../icons";
 
 interface IModalProps {
-  closeModal: () => void
-  children: ReactNode
-  title: string
+  closeModal: () => void;
+  children: ReactNode;
+  title: string;
 }
 
-const ESC_KEYCODE = 27
-const modalSelector = document.querySelector("#react-modals") as HTMLElement
+const ESC_KEYCODE = 27;
+const modalSelector = document.querySelector("#react-modals") as HTMLElement;
 
 const Modal: FC<IModalProps> = ({ children, closeModal, title }) => {
   const closeByEsc = (e: KeyboardEvent) => {
     if (e.keyCode === ESC_KEYCODE) {
-      closeModal()
+      closeModal();
     }
-  }
+  };
 
   useEffect(() => {
-    window.addEventListener("keydown", closeByEsc)
+    window.addEventListener("keydown", closeByEsc);
     return () => {
-      window.removeEventListener("keydown", closeByEsc)
-    }
-  }, [])
+      window.removeEventListener("keydown", closeByEsc);
+    };
+  }, []);
 
   return ReactDOM.createPortal(
     <>
@@ -37,7 +37,7 @@ const Modal: FC<IModalProps> = ({ children, closeModal, title }) => {
               "text",
               "text_type_main-large",
               "m-0",
-              styles.modal__title
+              styles.modal__title,
             )}
           >
             {title}
@@ -52,8 +52,8 @@ const Modal: FC<IModalProps> = ({ children, closeModal, title }) => {
       </div>
       <ModalOverlay onClick={closeModal} />
     </>,
-    modalSelector
-  )
-}
+    modalSelector,
+  );
+};
 
-export default Modal
+export default Modal;

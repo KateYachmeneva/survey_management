@@ -1,9 +1,9 @@
-import React from "react"
-import { Link, useNavigate } from "react-router-dom"
-import styles from "../wells-table.module.scss"
-import { TWellTable } from "../WellsTable"
-import { useDispatch } from "../../../services/hooks"
-import Button from "../../../ui-kit/buttons/Button"
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import styles from "../wells-table.module.scss";
+import { TWellTable } from "../WellsTable";
+import { useDispatch } from "../../../services/hooks";
+import Button from "../../../ui-kit/buttons/Button";
 
 const TableRow: React.FC<TWellTable> = ({
   id,
@@ -13,10 +13,10 @@ const TableRow: React.FC<TWellTable> = ({
   field_name,
   well_name,
   status_drilling,
-  status
+  status,
 }) => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   //   const handleDelete = (id: string) => {
   //     dispatch(deleteUser(id))
@@ -42,7 +42,7 @@ const TableRow: React.FC<TWellTable> = ({
         </Button>
       </td>
     </tr>
-  )
-}
+  );
+};
 
-export default TableRow
+export default TableRow;

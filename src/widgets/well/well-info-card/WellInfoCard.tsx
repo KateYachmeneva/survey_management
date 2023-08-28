@@ -1,35 +1,38 @@
-import React from "react"
-import styles from "./well-info-card.module.scss"
-import { IWellData, IPadData } from "../../../services/slices/wellsSlice"
-import { useSelector } from "../../../services/hooks"
+import React from "react";
+import styles from "./well-info-card.module.scss";
+import { IWellData, IPadData } from "../../../services/slices/wellsSlice";
+import { useSelector } from "../../../services/hooks";
 
 const WellInfoCard: React.FC<any> = ({
   selectRun,
-  selectWell
- }) => {
-
-
+  selectWell,
+  telesystem_type,
+}) => {
   return (
     <>
-    <ul className={styles.welldata__info}> 
-      <h2 className={styles.welldata__title}>Общая информация</h2>
-           
-      <li className={styles.welldata__item}>
+      <ul className={styles.welldata__info}>
+        <h2 className={styles.welldata__title}>Общая информация</h2>
+
+        <li className={styles.welldata__item}>
           <p className={styles.welldata__name}>Месторождение</p>
           <p className={styles.welldata__data_bold}> {selectWell.field_name}</p>
-      </li>
-      <li className={styles.welldata__item}>
+        </li>
+        <li className={styles.welldata__item}>
           <p className={styles.welldata__name}>Куст_Скважина</p>
-          <p className={styles.welldata__data_bold}>{selectWell.pad_name}_{selectWell.well_name}</p>
-      </li>
-      <li className={styles.welldata__item}>
-          <p className={styles.welldata__name}>Рейс</p>
-          <p className={styles.welldata__data}>
-            <span className={styles.welldata__data_bold}>{selectRun.run_number}</span>
+          <p className={styles.welldata__data_bold}>
+            {selectWell.pad_name}_{selectWell.well_name}
           </p>
         </li>
         <li className={styles.welldata__item}>
-        <p className={styles.welldata__name}>Начало сопровождения</p>
+          <p className={styles.welldata__name}>Рейс</p>
+          <p className={styles.welldata__data}>
+            <span className={styles.welldata__data_bold}>
+              {selectRun.run_number}
+            </span>
+          </p>
+        </li>
+        <li className={styles.welldata__item}>
+          <p className={styles.welldata__name}>Начало сопровождения</p>
           <p className={styles.welldata__data_bold}>{selectRun.start_date}</p>
         </li>
         <li className={styles.welldata__item}>
@@ -41,16 +44,20 @@ const WellInfoCard: React.FC<any> = ({
         <li className={styles.welldata__item}>
           <p className={styles.welldata__name}>Секция</p>
           <p className={styles.welldata__data}>
-            <span className={styles.welldata__data_bold}>{selectRun.section}</span>
+            <span className={styles.welldata__data_bold}>
+              {selectRun.section}
+            </span>
           </p>
         </li>
-                <li className={styles.welldata__item}>
+        <li className={styles.welldata__item}>
           <p className={styles.welldata__name}>Подрядчик</p>
-          <p className={styles.welldata__data_bold}>{selectWell.contractorNNB}</p>
+          <p className={styles.welldata__data_bold}>
+            {selectWell.contractorNNB}
+          </p>
         </li>
         <li className={styles.welldata__item}>
           <p className={styles.welldata__name}>ТС</p>
-          <p className={styles.welldata__data_bold}>telesystem_type</p>
+          <p className={styles.welldata__data_bold}>{telesystem_type}</p>
         </li>
         <li className={styles.welldata__item}>
           <p className={styles.welldata__name}>Cерийный №ТС</p>
@@ -117,7 +124,7 @@ const WellInfoCard: React.FC<any> = ({
         </li> */}
       </ul>
     </>
-  )
-}
+  );
+};
 
-export default WellInfoCard
+export default WellInfoCard;

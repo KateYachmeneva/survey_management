@@ -1,56 +1,57 @@
-import React, { SyntheticEvent, useState } from "react"
-import Navbar from "../../components/navbar/Navbar"
-import SquareButton from "../../ui-kit/buttons/SquareButton"
-import { AddClusterIcon, AddWellIcon } from "../../ui-kit/svg/icons"
-import { useDispatch } from "../../services/hooks"
-import { getRun } from "../../services/slices/runSlice"
-import styles from "./wells.module.scss"
-import PieChartComponent from "../../components/charts/PieChart"
-import BarChartComponent from "../../components/charts/BarChart"
-import WellAddModal from "../../components/modals/WellAddModal"
-import RigAddModal from "../../components/modals/RigAddModal"
-import { IWellData } from "../../services/slices/wellsSlice"
-import { useSelector } from "../../services/hooks"
-import Modal from "../../ui-kit/modal/Modal"
-import { openModal, closeModal } from "../../services/slices/modalSlice"
-import WellsCard from "../../components/wells-card/WellsCard"
+import React, { SyntheticEvent, useState } from "react";
+import Navbar from "../../components/navbar/Navbar";
+import SquareButton from "../../ui-kit/buttons/SquareButton";
+import { AddClusterIcon, AddWellIcon } from "../../ui-kit/svg/icons";
+import { useDispatch } from "../../services/hooks";
+import { getRun } from "../../services/slices/runSlice";
+import styles from "./wells.module.scss";
+import PieChartComponent from "../../components/charts/PieChart";
+import BarChartComponent from "../../components/charts/BarChart";
+import WellAddModal from "../../components/modals/WellAddModal";
+import RigAddModal from "../../components/modals/RigAddModal";
+import { IWellData } from "../../services/slices/wellsSlice";
+import { useSelector } from "../../services/hooks";
+import Modal from "../../ui-kit/modal/Modal";
+import { openModal, closeModal } from "../../services/slices/modalSlice";
+import WellsCard from "../../components/wells-card/WellsCard";
 
 const Wells = () => {
   const { allWells, wellsForChart, currentWell } = useSelector(
-    (store) => store.wells
-  )
-  const { isOpen } = useSelector((store) => store.modal)
-  const [activeWell, setActiveWell] = useState<IWellData>(currentWell)
-  const [clickedButton, setClickedButton] = useState<string>("")
-  const dispatch = useDispatch()
-  if (activeWell.id){
-    dispatch(getRun(activeWell.id))
+    (store) => store.wells,
+  );
+  const { isOpen } = useSelector((store) => store.modal);
+  const [activeWell, setActiveWell] = useState<IWellData>(currentWell);
+  const [clickedButton, setClickedButton] = useState<string>("");
+  const dispatch = useDispatch();
+  if (activeWell.id) {
+    dispatch(getRun(activeWell.id));
   }
-
 
   const handleOpenModal = (e: SyntheticEvent) => {
     if (e.currentTarget.textContent) {
-      setClickedButton(e.currentTarget.textContent)
+      setClickedButton(e.currentTarget.textContent);
     }
-    dispatch(openModal())
-  }
+    dispatch(openModal());
+  };
 
   const handleCloseModal = () => {
-    setClickedButton("")
-    dispatch(closeModal())
-  }
+    setClickedButton("");
+    dispatch(closeModal());
+  };
 
   const onClickHandler = (activeId: number) => {
-    const selectedWell = allWells.find((item) => item.id === activeId)
+    const selectedWell = allWells.find((item) => item.id === activeId);
     if (selectedWell) {
-      setActiveWell(selectedWell)
+      setActiveWell(selectedWell);
     }
-  }
+  };
 
-  const drillingWells = allWells.filter((well) => well.status_drilling === "ACTV")
+  const drillingWells = allWells.filter(
+    (well) => well.status_drilling === "ACTV",
+  );
 
   if (!(allWells.length > 0)) {
-    return <h1>Загрузка...</h1>
+    return <h1>Загрузка...</h1>;
   }
 
   return (
@@ -101,7 +102,7 @@ const Wells = () => {
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export default Wells
+export default Wells;

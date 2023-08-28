@@ -52,6 +52,11 @@ $colors: (
 .select-group {
     @include group(30px);
 }
+.select-group_small {
+     width:50px;
+    margin-bottom: 20px;
+}
+
 
 .label-group {
     @include group(15px);

@@ -31,9 +31,25 @@ $colors: (
   margin-bottom: $mb;
   margin-left: 3px;
 }
-
+.input_small{
+  height: 20px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  width: 80px;
+  gap: 20px;
+  outline: none;
+  text-indent: 1rem;
+}
 .input_group {
   @include group(20px);
+}
+.input_group_small {
+  @include group(30px);
+  box-sizing: border-box;
+  margin-left: 3px;
+  margin-bottom: 0;
 }
 
 .input_label_group {
@@ -64,4 +80,7 @@ $colors: (
   float: right;
   cursor: pointer;
   pointer-events: auto;
+}
+.input_label_group_small{
+  width:60px
 }

@@ -1,23 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit";
 
 export type TGetUserInfo = {
-  id: number
-  firstName: string
-  email: string
-  lastName: string
-  organization: string
-}
+  id: number;
+  firstName: string;
+  email: string;
+  lastName: string;
+  organization: string;
+};
 
 interface IUserSliceState {
-  isLoggedIn: boolean
-  loginRequest: boolean
-  loginFailed: boolean
-  loginError: boolean
-  firstName: string
-  lastName: string
-  email: string
-  password: string
-  organization: string
+  isLoggedIn: boolean;
+  loginRequest: boolean;
+  loginFailed: boolean;
+  loginError: boolean;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  organization: string;
 }
 
 const initialState: IUserSliceState = {
@@ -30,7 +30,7 @@ const initialState: IUserSliceState = {
   loginFailed: false,
   isLoggedIn: false,
   loginError: false,
-}
+};
 
 export const userSlice = createSlice({
   name: "user",
@@ -43,7 +43,7 @@ export const userSlice = createSlice({
         email: action.payload.email,
         organization: action.payload.organization,
         isLoggedIn: true,
-      })
+      });
     },
     logoutUser: (state) => {
       Object.assign(state, {
@@ -51,10 +51,10 @@ export const userSlice = createSlice({
         loginFailed: false,
         isLoggedIn: false,
         loginError: false,
-      })
+      });
     },
   },
-})
+});
 
-export default userSlice.reducer
-export const { setUserData, logoutUser } = userSlice.actions
+export default userSlice.reducer;
+export const { setUserData, logoutUser } = userSlice.actions;

@@ -1,14 +1,14 @@
-import React from "react"
-import styles from "./pagination.module.scss"
-import { ChevronRightIcon, ChevronLeftIcon } from "../../ui-kit/icons"
+import React from "react";
+import styles from "./pagination.module.scss";
+import { ChevronRightIcon, ChevronLeftIcon } from "../../ui-kit/icons";
 
 interface IPagintor {
-  wellsPerPage: number
-  totalWells: number
-  paginate: (number: number) => void
-  previousPage: () => void
-  nextPage: () => void
-  active: number
+  wellsPerPage: number;
+  totalWells: number;
+  paginate: (number: number) => void;
+  previousPage: () => void;
+  nextPage: () => void;
+  active: number;
 }
 
 const Pagination = ({
@@ -19,10 +19,10 @@ const Pagination = ({
   nextPage,
   active,
 }: IPagintor) => {
-  const pageNumbers = []
+  const pageNumbers = [];
 
   for (let i = 1; i <= Math.ceil(totalWells / wellsPerPage); i++) {
-    pageNumbers.push(i)
+    pageNumbers.push(i);
   }
 
   return (
@@ -47,7 +47,7 @@ const Pagination = ({
         <ChevronRightIcon type="interface-primary" />
       </li>
     </ul>
-  )
-}
+  );
+};
 
-export default Pagination
+export default Pagination;

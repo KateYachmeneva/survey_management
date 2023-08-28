@@ -1,8 +1,9 @@
-import React from "react"
+import React from "react";
 
 interface IIcon {
-  onClick?: (e: React.MouseEvent<HTMLOrSVGElement>) => void
-  style?: object
+  onClick?: (e: React.MouseEvent<HTMLOrSVGElement>) => void;
+
+  style?: object;
 }
 
 export const EyeIcon: React.FC<IIcon> = ({ onClick }) => {
@@ -21,8 +22,8 @@ export const EyeIcon: React.FC<IIcon> = ({ onClick }) => {
         fill="#F6CF00"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const ClosedEyeIcon: React.FC<IIcon> = ({ onClick, style }) => {
   return (
@@ -41,8 +42,8 @@ export const ClosedEyeIcon: React.FC<IIcon> = ({ onClick, style }) => {
         fill="#F6CF00"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const VectorIcon: React.FC<IIcon> = () => {
   return (
@@ -59,8 +60,8 @@ export const VectorIcon: React.FC<IIcon> = () => {
         fill="black"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const LogoIcon: React.FC<IIcon> = ({ style }) => {
   return (
@@ -95,8 +96,8 @@ export const LogoIcon: React.FC<IIcon> = ({ style }) => {
         />
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 export const PlusIcon: React.FC<IIcon> = () => {
   return (
@@ -113,8 +114,8 @@ export const PlusIcon: React.FC<IIcon> = () => {
         fill="#1F50BA"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const MinusIcon: React.FC<IIcon> = () => {
   return (
@@ -133,8 +134,8 @@ export const MinusIcon: React.FC<IIcon> = () => {
         strokeLinecap="round"
       />
     </svg>
-  )
-}
+  );
+};
 export const AddClusterIcon: React.FC<IIcon> = () => {
   return (
     <svg
@@ -154,8 +155,8 @@ export const AddClusterIcon: React.FC<IIcon> = () => {
         fill="#1F50BA"
       />
     </svg>
-  )
-}
+  );
+};
 export const DeleteClusterIcon: React.FC<IIcon> = () => {
   return (
     <svg
@@ -172,8 +173,8 @@ export const DeleteClusterIcon: React.FC<IIcon> = () => {
       />
       <path d="M40 19H30" stroke="#1F50BA" stroke-linecap="square" />
     </svg>
-  )
-}
+  );
+};
 export const AddWellIcon: React.FC<IIcon> = () => {
   return (
     <svg
@@ -193,8 +194,8 @@ export const AddWellIcon: React.FC<IIcon> = () => {
         fill="#1F50BA"
       />
     </svg>
-  )
-}
+  );
+};
 export const DeleteWellIcon: React.FC<IIcon> = () => {
   return (
     <svg
@@ -211,8 +212,8 @@ export const DeleteWellIcon: React.FC<IIcon> = () => {
         fill="#1F50BA"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const ArrowRightIcon: React.FC<IIcon> = ({ onClick }) => {
   return (
@@ -230,8 +231,8 @@ export const ArrowRightIcon: React.FC<IIcon> = ({ onClick }) => {
         fill="#1F50BA"
       />
     </svg>
-  )
-}
+  );
+};
 export const ArrowLeftIcon: React.FC<IIcon> = ({ onClick }) => {
   return (
     <svg
@@ -248,8 +249,8 @@ export const ArrowLeftIcon: React.FC<IIcon> = ({ onClick }) => {
         fill="#1F50BA"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const DeleteIcon: React.FC<IIcon> = ({ onClick }) => {
   return (
@@ -274,8 +275,8 @@ export const DeleteIcon: React.FC<IIcon> = ({ onClick }) => {
         strokeLinecap="round"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const Envelop: React.FC<IIcon> = ({ onClick }) => {
   return (
@@ -291,8 +292,8 @@ export const Envelop: React.FC<IIcon> = ({ onClick }) => {
         fill="#1F50BA"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const Document: React.FC<IIcon> = ({ onClick }) => {
   return (
@@ -308,8 +309,8 @@ export const Document: React.FC<IIcon> = ({ onClick }) => {
         fill="#1F50BA"
       />
     </svg>
-  )
-}
+  );
+};
 
 export const AddRun: React.FC<IIcon> = ({ onClick }) => {
   return (
@@ -324,8 +325,8 @@ export const AddRun: React.FC<IIcon> = ({ onClick }) => {
       <line x1="13" y1="6" x2="13" y2="20" stroke="#1F50BA" strokeWidth="2" />
       <line x1="6" y1="13" x2="20" y2="13" stroke="#1F50BA" strokeWidth="2" />
     </svg>
-  )
-}
+  );
+};
 
 export const DeleteRun: React.FC<IIcon> = ({ onClick }) => {
   return (
@@ -339,5 +340,45 @@ export const DeleteRun: React.FC<IIcon> = ({ onClick }) => {
       <circle cx="13" cy="13" r="12" stroke="#FF8863" strokeWidth="2" />
       <line x1="6" y1="13" x2="20" y2="13" stroke="#FF8863" strokeWidth="2" />
     </svg>
-  )
-}
+  );
+};
+export const UpdateIcon: React.FC<IIcon> = () => {
+  return (
+    <svg
+      width="23"
+      height="20"
+      viewBox="0 0 30 35"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="password-eye"
+    >
+      {/* <circle cx="30" cy="30" r="30" fill="#F6F7F9" /> */}
+      <g>
+        <path
+          d="M14.133,28.265c-7.061,0-12.805-5.75-12.805-12.809c0-7.06,5.744-12.807,12.805-12.807c0.469,0,0.943,0.027,1.414,0.08
+		v-2.07c0-0.266,0.164-0.508,0.406-0.611c0.252-0.098,0.531-0.043,0.723,0.148l4.537,4.547c0.258,0.258,0.258,0.67,0,0.932
+		l-4.535,4.557c-0.193,0.188-0.473,0.246-0.725,0.143c-0.242-0.104-0.406-0.344-0.406-0.609V7.47
+		c-0.469-0.086-0.941-0.125-1.414-0.125c-4.473,0-8.113,3.639-8.113,8.111c0,4.471,3.641,8.113,8.113,8.113s8.111-3.643,8.111-8.113
+		c0-0.363,0.295-0.66,0.662-0.66h3.369c0.365,0,0.662,0.297,0.662,0.66C26.937,22.515,21.189,28.265,14.133,28.265z"
+          fill="#1F50BA"
+          transform="translate(10, 0)"
+        />
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+      </g>
+    </svg>
+  );
+};

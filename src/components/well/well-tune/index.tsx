@@ -1,5 +1,5 @@
-import React from "react"
+import React from "react";
 
 export const WellTune = () => {
-  return <div>WellTune</div>
-}
+  return <div>WellTune</div>;
+};

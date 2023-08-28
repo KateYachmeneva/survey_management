@@ -1,35 +1,34 @@
-import React, { useState } from "react"
-import styles from "./navbar.module.scss"
+import React, { useState } from "react";
+import styles from "./navbar.module.scss";
 
 type TData = {
-  id: number
-  well_name?: string
-  dd_contractor_name?: string
-  full_name?: string
-  email?: string
-  phone?: string
-  author?: number
-  customer?: number
-  contractor?: string
-  field?: string
-  rig?: string
-  well_number?: string
-  status?: string
-  status_derilling?: string
-}
+  id: number;
+  well_name?: string;
+  dd_contractor_name?: string;
+  full_name?: string;
+  email?: string;
+  phone?: string;
+  author?: number;
+  customer?: number;
+  contractor?: string;
+  field?: string;
+  rig?: string;
+  well_number?: string;
+  status?: string;
+  status_derilling?: string;
+};
 
 type TCompaniesArray = {
-  data: Array<TData>
-  handleClick: (id: number) => void
-  activeWell: number
-}
+  data: Array<TData>;
+  handleClick: (id: number) => void;
+  activeWell: number;
+};
 
 const Navbar: React.FC<TCompaniesArray> = ({
   data,
   handleClick,
   activeWell,
 }) => {
-
   return (
     <div className={styles.navbar}>
       <div className={styles.navbar__items}>
@@ -50,7 +49,7 @@ const Navbar: React.FC<TCompaniesArray> = ({
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

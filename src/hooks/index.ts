@@ -1,1 +1,1 @@
-export { useFormAndValidation } from "./form-and-validation"
+export { useFormAndValidation } from "./form-and-validation";

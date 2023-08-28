@@ -1,25 +1,25 @@
-import React, { useEffect } from "react"
-import { Route, Routes } from "react-router-dom"
-import { useDispatch } from "../../services/hooks"
+import React, { useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
+import { useDispatch } from "../../services/hooks";
 // import { checkUserAuth } from "../../services/slices/getUserDataSlice"
-import { getAllContractors } from "../../services/slices/contractorsSlice"
-import { getAllWells } from "../../services/slices/wellsSlice"
-import { getAllCustomers } from "../../services/slices/customersSlice"
-import { getAllFields } from "../../services/slices/fieldSlice"
-import { getAllRigs } from "../../services/slices/rigSlice"
-import { getRun } from "../../services/slices/runSlice"
-import "./app.module.scss"
-import ErrorPage from "../../pages/error/ErrorPage"
-import RegisterUser from "../../pages/register/RegisterUser"
-import Login from "../../pages/login/Login"
-import Header from "../header/Header"
-import Home from "../../pages/home/Home"
-import Contractors from "../../pages/contractors/Contractors"
-import Wells from "../../pages/wells/Wells"
-import ProtectedRoute from "../protected-route/ProtectedRoute"
-import Customers from "../../pages/customers/Customers"
-import WellsTable from "../wells-table/WellsTable"
-import WellData from "../../pages/well-info/WellData"
+import { getAllContractors } from "../../services/slices/contractorsSlice";
+import { getAllWells } from "../../services/slices/wellsSlice";
+import { getAllCustomers } from "../../services/slices/customersSlice";
+import { getAllFields } from "../../services/slices/fieldSlice";
+import { getAllRigs } from "../../services/slices/rigSlice";
+import { getRun } from "../../services/slices/runSlice";
+import "./app.module.scss";
+import ErrorPage from "../../pages/error/ErrorPage";
+import RegisterUser from "../../pages/register/RegisterUser";
+import Login from "../../pages/login/Login";
+import Header from "../header/Header";
+import Home from "../../pages/home/Home";
+import Contractors from "../../pages/contractors/Contractors";
+import Wells from "../../pages/wells/Wells";
+import ProtectedRoute from "../protected-route/ProtectedRoute";
+import Customers from "../../pages/customers/Customers";
+import WellsTable from "../wells-table/WellsTable";
+import WellData from "../../pages/well-info/WellData";
 import {
   WellDynamic,
   WellInfo,
@@ -28,20 +28,20 @@ import {
   WellQuality,
   WellSurvey,
   WellTune,
-} from "../well"
+} from "../well";
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // dispatch(checkUserAuth())
-    dispatch(getAllCustomers())
-    dispatch(getAllContractors())
-    dispatch(getAllRigs())
-    dispatch(getAllWells())
-     dispatch(getAllFields())
+    dispatch(getAllCustomers());
+    dispatch(getAllContractors());
+    dispatch(getAllRigs());
+    dispatch(getAllWells());
+    dispatch(getAllFields());
     // dispatch(getRun())
-  }, [dispatch])
+  }, [dispatch]);
   return (
     <>
       <Header />
@@ -50,7 +50,7 @@ function App() {
           path="/"
           element={
             // <ProtectedRoute>
-              <Home />
+            <Home />
             // </ProtectedRoute>
           }
         />
@@ -58,7 +58,7 @@ function App() {
           path="services"
           element={
             // <ProtectedRoute>
-              <Contractors />
+            <Contractors />
             // </ProtectedRoute>
           }
         />
@@ -66,7 +66,7 @@ function App() {
           path="customers"
           element={
             // <ProtectedRoute>
-              <Customers />
+            <Customers />
             // </ProtectedRoute>
           }
         />
@@ -74,7 +74,7 @@ function App() {
           path="wells"
           element={
             // <ProtectedRoute>
-              <Wells />
+            <Wells />
             // </ProtectedRoute>
           }
         />
@@ -82,7 +82,7 @@ function App() {
           path="wells/:id"
           element={
             // <ProtectedRoute>
-              <WellData />
+            <WellData />
             // </ProtectedRoute>
           }
         >
@@ -90,7 +90,7 @@ function App() {
             path="info"
             element={
               // <ProtectedRoute>
-                <WellInfo />
+              <WellInfo />
               // </ProtectedRoute>
             }
           ></Route>
@@ -98,7 +98,7 @@ function App() {
             path="run"
             element={
               // <ProtectedRoute>
-                <WellRun />
+              <WellRun />
               // </ProtectedRoute>
             }
           />
@@ -106,7 +106,7 @@ function App() {
             path="survey"
             element={
               // <ProtectedRoute>
-                <WellSurvey />
+              <WellSurvey />
               // </ProtectedRoute>
             }
           />
@@ -114,7 +114,7 @@ function App() {
             path="dynamic"
             element={
               // <ProtectedRoute>
-                <WellDynamic />
+              <WellDynamic />
               // </ProtectedRoute>
             }
           />
@@ -122,7 +122,7 @@ function App() {
             path="projection"
             element={
               // <ProtectedRoute>
-                <WellProjection />
+              <WellProjection />
               // </ProtectedRoute>
             }
           />
@@ -130,7 +130,7 @@ function App() {
             path="quality"
             element={
               // <ProtectedRoute>
-                <WellQuality />
+              <WellQuality />
               // </ProtectedRoute>
             }
           />
@@ -139,7 +139,7 @@ function App() {
           path="/wells-table"
           element={
             // <ProtectedRoute>
-              <WellsTable />
+            <WellsTable />
             // </ProtectedRoute>
           }
         />
@@ -147,7 +147,7 @@ function App() {
           path="/register"
           element={
             // <ProtectedRoute onlyUnAuth={true}>
-              <RegisterUser />
+            <RegisterUser />
             // </ProtectedRoute>
           }
         />
@@ -155,14 +155,14 @@ function App() {
           path="/login"
           element={
             // <ProtectedRoute onlyUnAuth={true}>
-              <Login />
+            <Login />
             // </ProtectedRoute>
           }
         />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

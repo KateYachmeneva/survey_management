@@ -1,12 +1,12 @@
-import React, { PropsWithChildren, SyntheticEvent } from "react"
-import styles from "./buttons.module.scss"
+import React, { PropsWithChildren, SyntheticEvent } from "react";
+import styles from "./buttons.module.scss";
 
 interface IButtonProps {
-  onClick?: (e: SyntheticEvent) => void
-  text: string
+  onClick?: (e: SyntheticEvent) => void;
+  text: string;
 }
 
-export type Ref = HTMLButtonElement
+export type Ref = HTMLButtonElement;
 
 const SquareButton: React.FC<PropsWithChildren<IButtonProps>> = ({
   children,
@@ -18,7 +18,7 @@ const SquareButton: React.FC<PropsWithChildren<IButtonProps>> = ({
       {children}
       <p className={styles.text}>{text}</p>
     </button>
-  )
-}
+  );
+};
 
-export default React.memo(SquareButton)
+export default React.memo(SquareButton);

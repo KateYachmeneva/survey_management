@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react"
-import styles from "./styles.module.scss"
-import { EyeIcon, ClosedEyeIcon } from "../../ui-kit/svg/icons"
-import { ICustomInputProps } from "../../types"
+import React, { useEffect, useState } from "react";
+import styles from "./styles.module.scss";
+import { EyeIcon, ClosedEyeIcon } from "../../ui-kit/svg/icons";
+import { ICustomInputProps } from "../../types";
 
 const Input: React.FC<ICustomInputProps<HTMLInputElement>> = (props) => {
-  const [closeEye, setCloseEye] = useState<boolean>(false)
-  const [type, setType] = useState<string>("password")
-  const [isPassword, setIsPassword] = useState<boolean>(false)
+  const [closeEye, setCloseEye] = useState<boolean>(false);
+  const [type, setType] = useState<string>("password");
+  const [isPassword, setIsPassword] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsPassword(props.type === "password")
-  }, [props])
+    setIsPassword(props.type === "password");
+  }, [props]);
 
   return (
     <div className={styles.input_group} style={props.style}>
@@ -23,8 +23,8 @@ const Input: React.FC<ICustomInputProps<HTMLInputElement>> = (props) => {
         {props.extraLabel && (
           <span
             onClick={() => {
-              props.setShowLogin?.(false)
-              props.setShowResetPass?.(true)
+              props.setShowLogin?.(false);
+              props.setShowResetPass?.(true);
             }}
             className={styles.input_extra_label}
           >
@@ -47,23 +47,23 @@ const Input: React.FC<ICustomInputProps<HTMLInputElement>> = (props) => {
           {!closeEye ? (
             <EyeIcon
               onClick={() => {
-                setCloseEye(true)
-                setType("text")
+                setCloseEye(true);
+                setType("text");
               }}
             />
           ) : (
             <ClosedEyeIcon
               style={{ marginTop: "-3px" }}
               onClick={() => {
-                setCloseEye(false)
-                setType("password")
+                setCloseEye(false);
+                setType("password");
               }}
             />
           )}
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Input
+export default Input;

@@ -1,53 +1,53 @@
-import React, { SyntheticEvent, useEffect, useRef, useState } from "react"
-import Navbar from "../../components/navbar/Navbar"
-import SquareButton from "../../ui-kit/buttons/SquareButton"
-import { PlusIcon, MinusIcon } from "../../ui-kit/svg/icons"
-import ContractorAddModal from "../../components/modals/ContractorAddModal"
-import ContractorDeleteModal from "../../components/modals/ContractorDeleteModal"
-import { useDispatch } from "../../services/hooks"
-import styles from "./customers.module.scss"
-import PieChartComponent from "../../components/charts/PieChart"
-import BarChartComponent from "../../components/charts/BarChart"
-import { ICustomerData} from "../../types"
-import { useSelector } from "../../services/hooks"
-import Modal from "../../ui-kit/modal/Modal"
-import { closeModal, openModal } from "../../services/slices/modalSlice"
-import CustomerCard from "../../components/customers/CustomerCard"
+import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
+import Navbar from "../../components/navbar/Navbar";
+import SquareButton from "../../ui-kit/buttons/SquareButton";
+import { PlusIcon, MinusIcon } from "../../ui-kit/svg/icons";
+import ContractorAddModal from "../../components/modals/ContractorAddModal";
+import ContractorDeleteModal from "../../components/modals/ContractorDeleteModal";
+import { useDispatch } from "../../services/hooks";
+import styles from "./customers.module.scss";
+import PieChartComponent from "../../components/charts/PieChart";
+import BarChartComponent from "../../components/charts/BarChart";
+import { ICustomerData } from "../../types";
+import { useSelector } from "../../services/hooks";
+import Modal from "../../ui-kit/modal/Modal";
+import { closeModal, openModal } from "../../services/slices/modalSlice";
+import CustomerCard from "../../components/customers/CustomerCard";
 
 const Customers: React.FC = () => {
   const { allCustomers, customersForCharts } = useSelector(
-    (store) => store.customers
-  )
-  const { isOpen } = useSelector((store) => store.modal)
+    (store) => store.customers,
+  );
+  const { isOpen } = useSelector((store) => store.modal);
   const [activeCompany, setActiveCompany] = useState<ICustomerData>(
-    allCustomers[0]
-  )
-  console.log(allCustomers[0])
-  const [clickedButton, setClickedButton] = useState<string>("")
-  const dispatch = useDispatch()
+    allCustomers[0],
+  );
+  console.log(allCustomers[0]);
+  const [clickedButton, setClickedButton] = useState<string>("");
+  const dispatch = useDispatch();
 
   const handleOpenModal = (e: SyntheticEvent) => {
     if (e.currentTarget.textContent) {
-      setClickedButton(e.currentTarget.textContent)
+      setClickedButton(e.currentTarget.textContent);
     }
-    dispatch(openModal())
-  }
+    dispatch(openModal());
+  };
 
   const handleCloseModal = () => {
-    setClickedButton("")
-    dispatch(closeModal())
-  }
+    setClickedButton("");
+    dispatch(closeModal());
+  };
 
   const onClickHandler = (activeId: number) => {
-    const selectedCompany = allCustomers.find((item) => item.id === activeId)
+    const selectedCompany = allCustomers.find((item) => item.id === activeId);
     if (selectedCompany) {
-      console.log(selectedCompany)
-      setActiveCompany(selectedCompany)
+      console.log(selectedCompany);
+      setActiveCompany(selectedCompany);
     }
-  }
+  };
 
   if (!allCustomers) {
-    return <h1>Загрузка...</h1>
+    return <h1>Загрузка...</h1>;
   }
 
   return (
@@ -100,7 +100,7 @@ const Customers: React.FC = () => {
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export default Customers
+export default Customers;

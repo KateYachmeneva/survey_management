@@ -1,24 +1,24 @@
-import React from "react"
-import { NavLink, Link } from "react-router-dom"
-import { useSelector, useDispatch } from "../../services/hooks"
-import { LogoIcon, VectorIcon } from "../../ui-kit/svg/icons"
-import { logoutUser } from "../../services/slices/logoutSlice"
+import React from "react";
+import { NavLink, Link } from "react-router-dom";
+import { useSelector, useDispatch } from "../../services/hooks";
+import { LogoIcon, VectorIcon } from "../../ui-kit/svg/icons";
+import { logoutUser } from "../../services/slices/logoutSlice";
 import {
   Popover,
   Menu,
   Position,
   PeopleIcon,
   DrawerLeftFilledIcon,
-} from "evergreen-ui"
-import styles from "./header.module.scss"
+} from "evergreen-ui";
+import styles from "./header.module.scss";
 
 const Header: React.FC = () => {
-  const { firstName, lastName } = useSelector((store) => store.userData)
-  const dispatch = useDispatch()
+  const { firstName, lastName } = useSelector((store) => store.userData);
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
-    dispatch(logoutUser())
-  }
+    dispatch(logoutUser());
+  };
 
   return (
     <section className={styles.header}>
@@ -91,7 +91,7 @@ const Header: React.FC = () => {
         </button>
       </Popover>
     </section>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

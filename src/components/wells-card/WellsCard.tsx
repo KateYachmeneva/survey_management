@@ -1,10 +1,10 @@
-import React from "react"
-import { Link, Navigate, useNavigate } from "react-router-dom"
-import WellItem from "../contractors/well-item/WellItem"
-import styles from "./wells-card.module.scss"
-import { useSelector } from "../../services/hooks"
-import { IWellData } from "../../services/slices/wellsSlice"
-import Button from "../../ui-kit/buttons/Button"
+import React from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import WellItem from "../contractors/well-item/WellItem";
+import styles from "./wells-card.module.scss";
+import { useSelector } from "../../services/hooks";
+import { IWellData } from "../../services/slices/wellsSlice";
+import Button from "../../ui-kit/buttons/Button";
 
 const WellsCard: React.FC<IWellData> = ({
   id,
@@ -14,15 +14,19 @@ const WellsCard: React.FC<IWellData> = ({
   well_name,
   T1_start,
 }) => {
-  const navigate = useNavigate()
-  const { allWells } = useSelector((store) => store.wells)
+  const navigate = useNavigate();
+  const { allWells } = useSelector((store) => store.wells);
 
-  const pendingWells = allWells.filter((well) => well.status_drilling  === "PLAN")
+  const pendingWells = allWells.filter(
+    (well) => well.status_drilling === "PLAN",
+  );
 
-  const completedWells = allWells.filter((well) => well.status_drilling  === "ACTV")
+  const completedWells = allWells.filter(
+    (well) => well.status_drilling === "ACTV",
+  );
 
   if (!allWells) {
-    return <h1>Загрузка...</h1>
+    return <h1>Загрузка...</h1>;
   }
   return (
     <div className={styles.wells}>
@@ -35,9 +39,7 @@ const WellsCard: React.FC<IWellData> = ({
         </div>
         <div className={styles.wells__field}>
           <p className={styles.wells__text}>{client_name}</p>
-          <p className={styles.wells__text}>
-            {field_name} месторождение
-          </p>
+          <p className={styles.wells__text}>{field_name} месторождение</p>
           <p className={styles.wells__text}>
             Куст {pad_name}, Скважина {well_name}
           </p>
@@ -86,7 +88,7 @@ const WellsCard: React.FC<IWellData> = ({
         </ul>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default WellsCard
+export default WellsCard;

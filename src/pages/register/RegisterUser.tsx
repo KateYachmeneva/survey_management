@@ -1,13 +1,13 @@
-import React, { FormEvent } from "react"
-import { Link } from "react-router-dom"
-import { useDispatch } from "../../services/hooks"
-import styles from "./register-user.module.scss"
-import useForm from "../../hooks/useForm"
-import InputCustom from "../../components/input/InputCustom"
-import Button from "../../ui-kit/buttons/Button"
-import { useNavigate } from "react-router-dom"
-import { toaster } from "evergreen-ui"
-import { registerUser } from "../../services/slices/registerSlice"
+import React, { FormEvent } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch } from "../../services/hooks";
+import styles from "./register-user.module.scss";
+import useForm from "../../hooks/useForm";
+import InputCustom from "../../components/input/InputCustom";
+import Button from "../../ui-kit/buttons/Button";
+import { useNavigate } from "react-router-dom";
+import { toaster } from "evergreen-ui";
+import { registerUser } from "../../services/slices/registerSlice";
 
 const RegisterUser = () => {
   const { values, handleChange, setValues } = useForm({
@@ -16,9 +16,9 @@ const RegisterUser = () => {
     email: "",
     password: "",
     organization: "",
-  })
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  });
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const checkSignUpValidity = (): boolean => {
     return (
@@ -27,17 +27,17 @@ const RegisterUser = () => {
       !!values.firstName &&
       !!values.lastName &&
       !!values.organization
-    )
-  }
+    );
+  };
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     if (checkSignUpValidity()) {
-      dispatch(registerUser(values))
-      navigate("/login")
+      dispatch(registerUser(values));
+      navigate("/login");
     } else {
-      toaster.notify("Нужно заполнить все данные")
+      toaster.notify("Нужно заполнить все данные");
     }
-  }
+  };
 
   return (
     <form className={styles.signUpForm} onSubmit={(e): void => handleSubmit(e)}>
@@ -108,7 +108,7 @@ const RegisterUser = () => {
         Создать учетную запись
       </Button>
     </form>
-  )
-}
+  );
+};
 
-export default RegisterUser
+export default RegisterUser;

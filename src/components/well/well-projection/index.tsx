@@ -1,5 +1,5 @@
-import React from "react"
+import React from "react";
 
 export const WellProjection = () => {
-  return <div>WellProjection</div>
-}
+  return <div>WellProjection</div>;
+};

@@ -1,6 +1,6 @@
-import React from "react"
-import { Outlet } from "react-router-dom"
-import styles from "./home.module.scss"
+import React from "react";
+import { Outlet } from "react-router-dom";
+import styles from "./home.module.scss";
 
 const Home = () => {
   return (
@@ -15,7 +15,7 @@ const Home = () => {
       </div>
       <div className={styles.header__image_bottom}></div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

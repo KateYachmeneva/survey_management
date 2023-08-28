@@ -1,5 +1,5 @@
-import React from "react"
-import cn from "classnames"
+import React from "react";
+import cn from "classnames";
 import {
   ResponsiveContainer,
   BarChart,
@@ -7,9 +7,9 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-} from "recharts"
-import { ArrowLeftIcon, ArrowRightIcon } from "../../ui-kit/svg/icons"
-import styles from "./charts.module.scss"
+} from "recharts";
+import { ArrowLeftIcon, ArrowRightIcon } from "../../ui-kit/svg/icons";
+import styles from "./charts.module.scss";
 
 const data: TDataChart[] = [
   {
@@ -42,7 +42,7 @@ const data: TDataChart[] = [
     name: "ПНМР",
     value: 4,
   },
-]
+];
 
 const months: TMonths[] = [
   {
@@ -93,18 +93,18 @@ const months: TMonths[] = [
     name: "12",
     value: 25,
   },
-]
+];
 
 type TDataChart = {
-  color: string
-  name: string
-  value: number
-}
+  color: string;
+  name: string;
+  value: number;
+};
 
 type TMonths = {
-  name: string
-  value: number
-}
+  name: string;
+  value: number;
+};
 
 const BarChartComponent = () => {
   return (
@@ -142,7 +142,7 @@ const BarChartComponent = () => {
         </ResponsiveContainer>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default BarChartComponent
+export default BarChartComponent;

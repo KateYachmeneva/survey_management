@@ -1,18 +1,18 @@
-import React from "react"
-import cn from "classnames"
-import styles from "./buttons.module.scss"
+import React from "react";
+import cn from "classnames";
+import styles from "./buttons.module.scss";
 
 export type TButtonProps = React.PropsWithChildren<
   Omit<React.HTMLProps<HTMLButtonElement>, "size">
 > & {
-  htmlType: "button" | "submit" | "reset"
-  type?: "primary" | "secondary" | "negative" | "disabled"
-  size?: "small" | "large" | "micro"
-  extClassName?: string
-  onClick?: (() => void) | ((e: React.SyntheticEvent) => void)
-  disabled?: boolean
-  loading?: boolean
-}
+  htmlType: "button" | "submit" | "reset";
+  type?: "primary" | "secondary" | "negative" | "disabled";
+  size?: "small" | "large" | "micro";
+  extClassName?: string;
+  onClick?: (() => void) | ((e: React.SyntheticEvent) => void);
+  disabled?: boolean;
+  loading?: boolean;
+};
 
 const Button = ({
   type = "primary",
@@ -24,8 +24,8 @@ const Button = ({
   loading,
   ...props
 }: TButtonProps) => {
-  const sizeStyle = styles[`button_size_${size}`]
-  const typeStyle = styles[`button_type_${type}`]
+  const sizeStyle = styles[`button_size_${size}`];
+  const typeStyle = styles[`button_type_${type}`];
 
   return (
     <button
@@ -36,14 +36,14 @@ const Button = ({
         typeStyle,
         { [styles.button_loading]: loading },
         { [styles.button_disabled]: disabled },
-        extClassName
+        extClassName,
       )}
       disabled={disabled}
       {...props}
     >
       {children}
     </button>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;

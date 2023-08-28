@@ -1,15 +1,15 @@
-import React from "react"
-import cn from "classnames"
-import Button from "../buttons/Button"
-import styles from "./styles.module.scss"
+import React from "react";
+import cn from "classnames";
+import Button from "../buttons/Button";
+import styles from "./styles.module.scss";
 
 interface IFormContainerProps {
-  buttonText: string
-  children?: React.ReactNode
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-  submitError?: string | null
-  loading?: boolean
-  extClassName?: string
+  buttonText: string;
+  children?: React.ReactNode;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  submitError?: string | null;
+  loading?: boolean;
+  extClassName?: string;
 }
 
 export function Form({
@@ -43,5 +43,5 @@ export function Form({
         </Button>
       </div>
     </form>
-  )
+  );
 }

@@ -1,53 +1,59 @@
-import React from "react"
-import styles from "./contractors-card.module.scss"
-import { IContractorData } from "../../types"
-import { getLogo } from "../../utils/getLogo"
-import { useSelector } from "../../services/hooks"
-import WellItem from "./well-item/WellItem"
+import React from "react";
+import styles from "./contractors-card.module.scss";
+import { IContractorData } from "../../types";
+import { getLogo } from "../../utils/getLogo";
+import { useSelector } from "../../services/hooks";
+import WellItem from "./well-item/WellItem";
 
 interface IWellsOnStatus {
-  subsidiary: string
-  bush: string
-  well: string
+  subsidiary: string;
+  bush: string;
+  well: string;
 }
 
 export interface IWellData {
-  name: string
-  latest_activity?: string
-  color?: string
-  pending: IWellsOnStatus[]
-  in_drilling: IWellsOnStatus[]
-  drilled: IWellsOnStatus[]
+  name: string;
+  latest_activity?: string;
+  color?: string;
+  pending: IWellsOnStatus[];
+  in_drilling: IWellsOnStatus[];
+  drilled: IWellsOnStatus[];
 }
 
 export interface ICardProps {
-  contractor: IContractorData
+  contractor: IContractorData;
 }
 
 const ContractorsCard: React.FC<ICardProps> = ({ contractor }) => {
- 
-  const { allWells } = useSelector((store) => store.wells)
+  const { allWells } = useSelector((store) => store.wells);
 
   const contractorWells = allWells.filter(
-    (well) => (well.contractorNNB === `${contractor.dd_contractor_name} `))
-  
- const drillingWells = contractorWells.filter((well) => well.status_drilling  === "ACTV")
-  
-  const pendingWells = contractorWells.filter((well) => well.status_drilling  === "PLAN")
+    (well) => well.contractorNNB === `${contractor.dd_contractor_name} `,
+  );
+
+  const drillingWells = contractorWells.filter(
+    (well) => well.status_drilling === "ACTV",
+  );
+
+  const pendingWells = contractorWells.filter(
+    (well) => well.status_drilling === "PLAN",
+  );
 
   const completedWells = contractorWells.filter(
-    (well) => well.status_drilling === "FINI"
-  )
+    (well) => well.status_drilling === "FINI",
+  );
 
   if (!contractor) {
-    return <h1>Загрузка...</h1>
+    return <h1>Загрузка...</h1>;
   }
   return (
     <section className={styles.contractors}>
       <div className={styles.contractors__header}>
         <div className={styles.contractors__title}>
           {getLogo(contractor.dd_contractor_name)}
-          <h2 className={styles.contractors__name}>{contractor.dd_contractor_name}</h2>
+          <h2 className={styles.contractors__name}>
+            {contractor.dd_contractor_name}
+          </h2>
         </div>
         <p className={styles.contractors__all}>
           Всего скважин{" "}
@@ -67,7 +73,11 @@ const ContractorsCard: React.FC<ICardProps> = ({ contractor }) => {
           <ul className={styles.wells__list}>
             {drillingWells
               ? drillingWells.map((well) => (
-                  <WellItem key={well.id} name={contractor.dd_contractor_name} well={well} />
+                  <WellItem
+                    key={well.id}
+                    name={contractor.dd_contractor_name}
+                    well={well}
+                  />
                 ))
               : null}
           </ul>
@@ -82,7 +92,11 @@ const ContractorsCard: React.FC<ICardProps> = ({ contractor }) => {
           <ul className={styles.wells__list}>
             {pendingWells
               ? pendingWells.map((well) => (
-                  <WellItem key={well.id} name={contractor.dd_contractor_name} well={well} />
+                  <WellItem
+                    key={well.id}
+                    name={contractor.dd_contractor_name}
+                    well={well}
+                  />
                 ))
               : null}
           </ul>
@@ -97,14 +111,18 @@ const ContractorsCard: React.FC<ICardProps> = ({ contractor }) => {
           <ul className={styles.wells__list}>
             {completedWells
               ? completedWells.map((well) => (
-                  <WellItem key={well.id} name={contractor.dd_contractor_name} well={well} />
+                  <WellItem
+                    key={well.id}
+                    name={contractor.dd_contractor_name}
+                    well={well}
+                  />
                 ))
               : null}
           </ul>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default ContractorsCard
+export default ContractorsCard;

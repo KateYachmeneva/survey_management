@@ -1,11 +1,11 @@
-import React from "react"
-import "./styles.scss"
+import React from "react";
+import "./styles.scss";
 
-import { ICustomInputProps } from "../../types/index"
+import { ICustomInputProps } from "../../types/index";
 
 //option сложно стилизовать, надо подумать над этой проблемой
 const SelectCustom: React.FC<ICustomInputProps<HTMLSelectElement>> = (
-  props
+  props,
 ) => {
   return (
     <div className="select-group" style={props.style}>
@@ -18,8 +18,8 @@ const SelectCustom: React.FC<ICustomInputProps<HTMLSelectElement>> = (
         {!!props.extraLabel && (
           <span
             onClick={() => {
-              props.setShowLogin?.(false)
-              props.setShowResetPass?.(true)
+              props.setShowLogin?.(false);
+              props.setShowResetPass?.(true);
             }}
             className="select-extra-label"
           >
@@ -45,7 +45,7 @@ const SelectCustom: React.FC<ICustomInputProps<HTMLSelectElement>> = (
           ))}
       </select>
     </div>
-  )
-}
+  );
+};
 
-export default SelectCustom
+export default SelectCustom;

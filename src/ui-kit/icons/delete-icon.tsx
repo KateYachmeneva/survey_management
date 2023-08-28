@@ -1,6 +1,6 @@
 export interface IIcon {
-  onClick?: () => void
-  style?: object
+  onClick?: () => void;
+  style?: object;
 }
 
 export const DeleteIcon: React.FC<IIcon> = ({ onClick }) => {
@@ -26,5 +26,5 @@ export const DeleteIcon: React.FC<IIcon> = ({ onClick }) => {
         strokeLinecap="round"
       />
     </svg>
-  )
-}
+  );
+};

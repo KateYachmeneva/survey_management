@@ -1,5 +1,5 @@
-import React from "react"
-import cn from "classnames"
+import React from "react";
+import cn from "classnames";
 import {
   ResponsiveContainer,
   PieChart,
@@ -7,14 +7,14 @@ import {
   Cell,
   Tooltip,
   Label,
-} from "recharts"
-import styles from "./charts.module.scss"
+} from "recharts";
+import styles from "./charts.module.scss";
 
 type TDataChart = {
-  initialDepth: number
-  currentDepth: number
-  planDepth: number
-}
+  initialDepth: number;
+  currentDepth: number;
+  planDepth: number;
+};
 
 const PieChartWithoutHeader: React.FC<TDataChart> = ({
   initialDepth,
@@ -24,13 +24,13 @@ const PieChartWithoutHeader: React.FC<TDataChart> = ({
   const data = [
     { name: "Пробурено", value: planDepth - initialDepth },
     { name: "Осталось", value: planDepth - currentDepth },
-  ]
+  ];
 
   const value = Math.ceil(
-    (data[0].value / data.reduce((acc, cur) => acc + cur.value, 0)) * 100
-  )
+    (data[0].value / data.reduce((acc, cur) => acc + cur.value, 0)) * 100,
+  );
 
-  const COLORS = ["#00C49F", "#FF8042"]
+  const COLORS = ["#00C49F", "#FF8042"];
   return (
     <div style={{ marginTop: "25px" }}>
       <ResponsiveContainer width="100%" height={176}>
@@ -48,7 +48,7 @@ const PieChartWithoutHeader: React.FC<TDataChart> = ({
         </PieChart>
       </ResponsiveContainer>
     </div>
-  )
-}
+  );
+};
 
-export default PieChartWithoutHeader
+export default PieChartWithoutHeader;

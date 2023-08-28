@@ -1,4 +1,4 @@
-import { getColor, IIconProps } from './utils';
+import { getColor, IIconProps } from "./utils";
 
 export const CloseIcon = ({ type, onClick, ...props }: IIconProps) => (
   <svg

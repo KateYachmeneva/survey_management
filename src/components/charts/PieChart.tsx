@@ -1,5 +1,5 @@
-import React from "react"
-import cn from "classnames"
+import React from "react";
+import cn from "classnames";
 import {
   ResponsiveContainer,
   PieChart,
@@ -7,16 +7,16 @@ import {
   Cell,
   Tooltip,
   Label,
-} from "recharts"
-import styles from "./charts.module.scss"
-import { IWellChart } from "../../services/slices/wellsSlice"
+} from "recharts";
+import styles from "./charts.module.scss";
+import { IWellChart } from "../../services/slices/wellsSlice";
 
 type TChart = {
-  data: IWellChart[]
-}
+  data: IWellChart[];
+};
 
 const PieChartComponent: React.FC<TChart> = ({ data }) => {
-   return (
+  return (
     <section className={cn(styles.chart, styles.chart__height_fix)}>
       <h2 className={styles.chart__title}>Скважин в бурении</h2>
       <ul className={styles.chart__list}>
@@ -38,7 +38,7 @@ const PieChartComponent: React.FC<TChart> = ({ data }) => {
               <Label
                 value={`${data.reduce(
                   (prev: any, curr: any) => prev + curr.value,
-                  0
+                  0,
                 )} всего`}
                 position="center"
               />
@@ -51,7 +51,7 @@ const PieChartComponent: React.FC<TChart> = ({ data }) => {
         </ResponsiveContainer>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default PieChartComponent
+export default PieChartComponent;

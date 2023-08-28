@@ -1,0 +1,20 @@
+.svg_button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    padding: 10px;
+    color: #333; /* Цвет иконки */
+    font-size: 16px;
+  }
+  
+  .svg_button svg {
+    fill: currentColor; /* Использовать цвет текста для заливки иконки */
+    margin-right: 5px;
+  }
+  
+  .button-text {
+    margin-left: 5px;
+  }
+  

@@ -1,20 +1,20 @@
-import styles from "./sort-header.module.scss"
-import { useDispatch, useSelector } from "../../services/hooks"
-import { sortByStatus, sortByWell } from "../../services/slices/wellsSlice"
+import styles from "./sort-header.module.scss";
+import { useDispatch, useSelector } from "../../services/hooks";
+import { sortByStatus, sortByWell } from "../../services/slices/wellsSlice";
 
 function SortHeader() {
   const { isFilteredByWell, isFilteredByStatus } = useSelector(
-    (store) => store.wells
-  )
-  const dispatch = useDispatch()
+    (store) => store.wells,
+  );
+  const dispatch = useDispatch();
 
   const handleWellSort = () => {
-    dispatch(sortByWell())
-  }
+    dispatch(sortByWell());
+  };
 
   const handleStatusSort = () => {
-    dispatch(sortByStatus())
-  }
+    dispatch(sortByStatus());
+  };
 
   return (
     <div className={styles.sort}>
@@ -38,7 +38,7 @@ function SortHeader() {
         Статус
       </button>
     </div>
-  )
+  );
 }
 
-export default SortHeader
+export default SortHeader;

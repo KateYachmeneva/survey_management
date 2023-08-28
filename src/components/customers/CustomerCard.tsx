@@ -1,25 +1,31 @@
-import React from "react"
-import styles from "./customer-card.module.scss"
-import { useSelector } from "../../services/hooks"
-import { ICustomerData } from "../../types"
-import { LogoIcon } from "../../ui-kit/svg/icons"
-import WellItem from "../contractors/well-item/WellItem"
+import React from "react";
+import styles from "./customer-card.module.scss";
+import { useSelector } from "../../services/hooks";
+import { ICustomerData } from "../../types";
+import { LogoIcon } from "../../ui-kit/svg/icons";
+import WellItem from "../contractors/well-item/WellItem";
 
 export interface ICustomerChartData {
-  customer: ICustomerData
+  customer: ICustomerData;
 }
 
 const CustomerCard: React.FC<ICustomerChartData> = ({ customer }) => {
-  const { allWells } = useSelector((store) => store.wells)
+  const { allWells } = useSelector((store) => store.wells);
   const customerWells = allWells.filter(
-    (well) => +well.client_name === customer.id
-  )
+    (well) => +well.client_name === customer.id,
+  );
 
-  const drillingWells = customerWells.filter((well) => well.status_drilling  === "ACTV")
+  const drillingWells = customerWells.filter(
+    (well) => well.status_drilling === "ACTV",
+  );
 
-  const pendingWells = customerWells.filter((well) => well.status_drilling  === "PLAN")
+  const pendingWells = customerWells.filter(
+    (well) => well.status_drilling === "PLAN",
+  );
 
-  const completedWells = customerWells.filter((well) => well.status_drilling  === "FINI")
+  const completedWells = customerWells.filter(
+    (well) => well.status_drilling === "FINI",
+  );
 
   return (
     <section className={styles.contractors}>
@@ -80,7 +86,7 @@ const CustomerCard: React.FC<ICustomerChartData> = ({ customer }) => {
         </li>
       </ul>
     </section>
-  )
-}
+  );
+};
 
-export default CustomerCard
+export default CustomerCard;

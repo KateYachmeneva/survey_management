@@ -1,4 +1,4 @@
-import { getColor, IIconProps } from './utils';
+import { getColor, IIconProps } from "./utils";
 
 export const ChevronLeftIcon = ({ type, ...props }: IIconProps) => (
   <svg

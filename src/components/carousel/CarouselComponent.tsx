@@ -1,11 +1,11 @@
-import React from "react"
-import styles from "./carousel-component.module.scss"
-import stat from "../../svg/stat.svg"
-import chat from "../../svg/chat.svg"
-import navigation from "../../svg/navigation.svg"
-import unification from "../../svg/unification.svg"
-import { Carousel } from "react-bootstrap"
-import { LogoIcon } from "../../ui-kit/svg/icons"
+import React from "react";
+import styles from "./carousel-component.module.scss";
+import stat from "../../svg/stat.svg";
+import chat from "../../svg/chat.svg";
+import navigation from "../../svg/navigation.svg";
+import unification from "../../svg/unification.svg";
+import { Carousel } from "react-bootstrap";
+import { LogoIcon } from "../../ui-kit/svg/icons";
 
 const CarouselComponent = () => {
   return (
@@ -72,7 +72,7 @@ const CarouselComponent = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default CarouselComponent
+export default CarouselComponent;

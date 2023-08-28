@@ -1,16 +1,16 @@
 interface IWellsOnStatus {
-  subsidiary: string
-  bush: string
-  well: string
+  subsidiary: string;
+  bush: string;
+  well: string;
 }
 
 export interface IWellData {
-  name: string
-  latest_activity?: string
-  color?: string
-  pending: IWellsOnStatus[]
-  in_drilling: IWellsOnStatus[]
-  drilled: IWellsOnStatus[]
+  name: string;
+  latest_activity?: string;
+  color?: string;
+  pending: IWellsOnStatus[];
+  in_drilling: IWellsOnStatus[];
+  drilled: IWellsOnStatus[];
 }
 
 export const initialData: IWellData[] = [
@@ -44,4 +44,4 @@ export const initialData: IWellData[] = [
     ],
     drilled: [{ subsidiary: "Оренбургнефть", bush: "40", well: "345" }],
   },
-]
+];

@@ -1,7 +1,7 @@
-import React from "react"
-import { Link } from "react-router-dom"
-import ReactErrorImage from "../../ui-kit/svg/404.svg"
-import styles from "./error-page.module.scss"
+import React from "react";
+import { Link } from "react-router-dom";
+import ReactErrorImage from "../../ui-kit/svg/404.svg";
+import styles from "./error-page.module.scss";
 
 const ErrorPage = () => {
   return (
@@ -19,7 +19,7 @@ const ErrorPage = () => {
         alt="Такой страницы не существует"
       />
     </div>
-  )
-}
+  );
+};
 
-export default ErrorPage
+export default ErrorPage;

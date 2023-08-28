@@ -1,9 +1,9 @@
-import { getColor, IIconProps } from './utils';
+import { getColor, IIconProps } from "./utils";
 
 export const CircleCheckIcon = ({ type, size, ...props }: IIconProps) => (
   <svg
-    width={size || '24'}
-    height={size || '24'}
+    width={size || "24"}
+    height={size || "24"}
     viewBox="0 0 24 24"
     fill={getColor(type)}
     xmlns="http://www.w3.org/2000/svg"

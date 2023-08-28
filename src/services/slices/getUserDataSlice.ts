@@ -1,14 +1,14 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { AppDispatch } from "../store"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { AppDispatch } from "../store";
 // import { getUserDataApi } from "../../api"
-import { setUserData } from "./userSlice"
-import { getCookie } from "../../utils"
+import { setUserData } from "./userSlice";
+import { getCookie } from "../../utils";
 
 interface IUserDataSlice {
-  getUserDataRequest: boolean
-  getUserDataSuccess: boolean
-  getUserDataError: boolean
-  authChecked: boolean
+  getUserDataRequest: boolean;
+  getUserDataSuccess: boolean;
+  getUserDataError: boolean;
+  authChecked: boolean;
 }
 
 const initialState: IUserDataSlice = {
@@ -16,7 +16,7 @@ const initialState: IUserDataSlice = {
   getUserDataSuccess: false,
   getUserDataError: false,
   authChecked: false,
-}
+};
 
 // export const getUserInfo = createAsyncThunk(
 //   "userInfo/getUserInfo",
@@ -71,4 +71,4 @@ const initialState: IUserDataSlice = {
 //   }
 //   dispatch(authChecked())
 // }
-export const getUserInfo = "d"
+export const getUserInfo = "d";

@@ -1,16 +1,12 @@
-import React, { useState } from "react"
-import "./styles.scss"
+import React, { useState } from "react";
+import "./styles.scss";
 
-import { ICustomInputProps } from "../../../types/index"
+import { ICustomInputProps } from "../../../types/index";
 
 //option сложно стилизовать, надо подумать над этой проблемой
-const SelectBox: React.FC<ICustomInputProps<HTMLSelectElement>> = (
-  props
-) => {
-
+const SelectBox: React.FC<ICustomInputProps<HTMLSelectElement>> = (props) => {
   console.log(props.data);
   return (
-
     <div className="select-group" style={props.style}>
       <div className="label-group">
         {!!props.label && (
@@ -21,8 +17,8 @@ const SelectBox: React.FC<ICustomInputProps<HTMLSelectElement>> = (
         {!!props.extraLabel && (
           <span
             onClick={() => {
-              props.setShowLogin?.(false)
-              props.setShowResetPass?.(true)
+              props.setShowLogin?.(false);
+              props.setShowResetPass?.(true);
             }}
             className="select-extra-label"
           >
@@ -31,12 +27,12 @@ const SelectBox: React.FC<ICustomInputProps<HTMLSelectElement>> = (
         )}
       </div>
       <select
-      name = {props.name}
-      className={!!props.blue ? "select-blue" : "select-yellow"}
-      id={props.label}
-      required
-      defaultValue={'DEFAULT'} 
-      onChange={props.onChange}
+        name={props.name}
+        className={!!props.blue ? "select-blue" : "select-yellow"}
+        id={props.label}
+        required
+        defaultValue={"DEFAULT"}
+        onChange={props.onChange}
       >
         <option value="DEFAULT" disabled>
           {props.placeholder}
@@ -49,6 +45,6 @@ const SelectBox: React.FC<ICustomInputProps<HTMLSelectElement>> = (
           ))}
       </select>
     </div>
-  )
-}
-  export default SelectBox;
+  );
+};
+export default SelectBox;

@@ -1,16 +1,16 @@
-import { combineReducers } from "redux"
-import modalSlice from "../slices/modalSlice"
+import { combineReducers } from "redux";
+import modalSlice from "../slices/modalSlice";
 // import getUserDataSlice from "../slices/getUserDataSlice"
-import registerSlice from "../slices/registerSlice"
-import userSlice from "../slices/userSlice"
-import loginSlice from "../slices/loginSlice"
-import logoutSlice from "../slices/logoutSlice"
-import wellsSlice from "../slices/wellsSlice"
-import contractorsSlice from "../slices/contractorsSlice"
-import customersSlice from "../slices/customersSlice"
-import rigSlice from "../slices/rigSlice"
-import runSlice from "../slices/runSlice"
-import fieldSlice from "../slices/fieldSlice"
+import registerSlice from "../slices/registerSlice";
+import userSlice from "../slices/userSlice";
+import loginSlice from "../slices/loginSlice";
+import logoutSlice from "../slices/logoutSlice";
+import wellsSlice from "../slices/wellsSlice";
+import contractorsSlice from "../slices/contractorsSlice";
+import customersSlice from "../slices/customersSlice";
+import rigSlice from "../slices/rigSlice";
+import runSlice from "../slices/runSlice";
+import fieldSlice from "../slices/fieldSlice";
 
 export const rootReducer = combineReducers({
   userData: userSlice,
@@ -25,6 +25,6 @@ export const rootReducer = combineReducers({
   customers: customersSlice,
   rigs: rigSlice,
   runs: runSlice,
-})
+});
 
-export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof rootReducer>;

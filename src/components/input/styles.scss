@@ -68,4 +68,11 @@ $colors: (
   float: right;
   cursor: pointer;
   pointer-events: auto;
+  // &:hover {
+  //   background: #e2e2e2;
+  //   color: #1771e6;
+  // }
+  &:hover circle {
+       fill:  #f6cf00;
+  }
 }

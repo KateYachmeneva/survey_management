@@ -1,25 +1,25 @@
-import React, { FormEvent, useState, ChangeEvent } from "react"
-import { useDispatch, useSelector } from "../../services/hooks"
-import { Link } from "react-router-dom"
-import { Button } from "react-bootstrap"
-import styles from "../register/register-page.module.css"
-import InputCustom from "../../components/input/InputCustom"
+import React, { FormEvent, useState, ChangeEvent } from "react";
+import { useDispatch, useSelector } from "../../services/hooks";
+import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import styles from "../register/register-page.module.css";
+import InputCustom from "../../components/input/InputCustom";
 
 const ResetPassword = () => {
-  const [token, setToken] = useState("")
-  const [password, setPassword] = useState("")
-  const dispatch = useDispatch()
+  const [token, setToken] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const target = e.target as HTMLInputElement
-    setPassword(target.value)
-  }
+    const target = e.target as HTMLInputElement;
+    setPassword(target.value);
+  };
   //   const { visitedPath } = useSelector((store) => store.user)
   //   const user = useSelector((store) => store.user.email)
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     // dispatch(resetPassword(password, token, history))
-  }
+  };
 
   //   if (!visitedPath) {
   //     return <Redirect to='/login' />
@@ -55,7 +55,7 @@ const ResetPassword = () => {
         Вспомнили пароль? <Link to="/login">Войти</Link>
       </p>
     </div>
-  )
-}
+  );
+};
 
-export default ResetPassword
+export default ResetPassword;

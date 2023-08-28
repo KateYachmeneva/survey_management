@@ -1,7 +1,7 @@
-import React from "react"
-import { useNavigate } from "react-router-dom"
-import styles from "./well-parameters.module.scss"
-import { IWellData } from "../../../services/slices/wellsSlice"
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "./well-parameters.module.scss";
+import { IWellData } from "../../../services/slices/wellsSlice";
 
 const WellParametersCard: React.FC<IWellData> = ({
   client_name,
@@ -23,7 +23,6 @@ const WellParametersCard: React.FC<IWellData> = ({
   dec,
   grid_convergence,
   critical_azimuth,
-  
 }) => {
   return (
     <>
@@ -148,7 +147,7 @@ const WellParametersCard: React.FC<IWellData> = ({
         </ul>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default WellParametersCard
+export default WellParametersCard;

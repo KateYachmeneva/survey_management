@@ -1,13 +1,13 @@
-import React, { useState } from "react"
-import { NavLink, Outlet, useParams } from "react-router-dom"
-import styles from "./navbar.module.scss"
+import React, { useState } from "react";
+import { NavLink, Outlet, useParams } from "react-router-dom";
+import styles from "./navbar.module.scss";
 
-type TData = {}
+type TData = {};
 
-type TCompaniesArray = {}
+type TCompaniesArray = {};
 
 const WellNavbar: React.FC<TCompaniesArray> = ({}) => {
-  const params = useParams()
+  const params = useParams();
 
   return (
     <>
@@ -70,7 +70,7 @@ const WellNavbar: React.FC<TCompaniesArray> = ({}) => {
         </ul>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default WellNavbar
+export default WellNavbar;

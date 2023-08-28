@@ -1,10 +1,10 @@
-import React, { useState, FormEvent } from "react"
-import { useDispatch } from "../../services/hooks"
-import { Link } from "react-router-dom"
-import InputCustom from "../../components/input/InputCustom"
-import useForm from "../../hooks/useForm"
-import styles from "../register/register-page.module.css"
-import { Button } from "react-bootstrap"
+import React, { useState, FormEvent } from "react";
+import { useDispatch } from "../../services/hooks";
+import { Link } from "react-router-dom";
+import InputCustom from "../../components/input/InputCustom";
+import useForm from "../../hooks/useForm";
+import styles from "../register/register-page.module.css";
+import { Button } from "react-bootstrap";
 
 const ForgotPassword = () => {
   const { values, handleChange, setValues } = useForm({
@@ -13,14 +13,14 @@ const ForgotPassword = () => {
     email: "",
     password: "",
     organization: "",
-  })
+  });
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     // dispatch(forgotPassword(email, location.pathname, history))
-  }
+  };
 
   return (
     <div className={styles.register}>
@@ -41,7 +41,7 @@ const ForgotPassword = () => {
         Вспомнили пароль? <Link to="/login">Войти</Link>
       </p>
     </div>
-  )
-}
+  );
+};
 
-export default ForgotPassword
+export default ForgotPassword;
