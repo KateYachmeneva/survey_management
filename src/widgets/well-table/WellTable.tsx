@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useTable, useSortBy, HeaderGroup,Column, UseSortByColumnProps, Row } from 'react-table';
+import { useTable, useSortBy, HeaderGroup,Column, UseSortByColumnProps, Row, useRowSelect } from 'react-table';
 import { v4 as uuidv4 } from 'uuid'; 
 import { DeleteOutlined } from '@ant-design/icons';
+import styles from "./well-table.module.scss";
 
 interface DataRow {
 	id: any;
@@ -9,13 +10,24 @@ interface DataRow {
 	CX: any;
 	CY: any;
 	CZ: any;
+	BX:any;
+	BY:any;
+	BZ:any;
+	Gtotal?:any;
+	Btotal_raw?:any;
+	Btotal_corr:any;
+	DIP_raw?:any;
+	DIP_corr:any;
+	Zenit?:any;
+	Azimut?:any;
+	comment:any;
 	isSorted?:any;
 	// Add other properties as needed
   }
 
 
 export const WellTable  = () => {
-	const data = React.useMemo(
+	const preData = React.useMemo(
        () => [
 			{
 				"id": 6720,
@@ -31,7 +43,7 @@ export const WellTable  = () => {
 				"in_statistics": true,
 				"comment": "210 -290 -55 1.003 1.0026 0.9802 Геотрак",
 				"run": 147
-			},
+			 },
 			{
 				"id": 6721,
 				"depth": 2398.94,
@@ -365,24 +377,70 @@ export const WellTable  = () => {
 		],
 		[]
 	  )
-  const [tableData, setTableData] = useState<DataRow[]>(data);
+	  function calculateZenit(CX:any, CY:any, CZ:any) {
+		function degrees(radians:any) {
+		  return radians * (180 / Math.PI);
+		}
+	  
+		return Math.round(
+		  degrees(Math.acos(CZ / Math.sqrt(CX ** 2 + CY ** 2 + CZ ** 2))) * 100
+		) / 100;
+	  }
+	 
+  const [tableData, setTableData] = useState<DataRow[]>([]);
   const [selectedRows, setSelectedRows] = useState<Row<DataRow>[]>([]);
+
+  useEffect(() => {
+	const data = preData.map(item => ({
+	  ...item,
+	  Gtotal: item.Gtotal !== undefined ? item.Gtotal : '',
+	  Btotal_raw: item.Btotal_raw !== undefined ? item.Btotal_raw : '',
+	  Btotal_corr: item.Btotal_corr !== undefined ? item.Btotal_corr : '',
+	  DIP_raw: item.DIP_raw !== undefined ? item.DIP_raw : '',
+	  DIP_corr: item.DIP_corr !== undefined ? item.DIP_corr : '',
+	  Zenit: calculateZenit(item.CX, item.CY, item.CZ),
+	  Azimut: item.Azimut !== undefined ? item.Azimut : '',
+	 }));
+	setTableData(data);
+  }, [preData]);
   const [newRow, setNewRow] = useState<DataRow>({
-    id: uuidv4(),
+	id:'',
     depth: '',
     CX: '',
     CY: '',
     CZ: '',
+	BX: '',
+	BY: '',
+	BZ: '',
+	Gtotal:'',
+	Btotal_raw: '',
+	Btotal_corr: '',
+	DIP_raw: '',
+	DIP_corr: '',
+	Zenit: '',
+	Azimut: '',
+	comment: '',
   });
 
   const handleAddRow = () => {
     setTableData([...tableData, newRow]);
     setNewRow({
-      id: uuidv4(),
+	  id: uuidv4(),
       depth: '',
       CX: '',
       CY: '',
       CZ: '',
+	  BX: '',
+      BY: '',
+      BZ: '',
+      Gtotal: '',
+      Btotal_raw: '',
+      Btotal_corr: '',
+      DIP_raw: '',
+      DIP_corr: '',
+      Zenit: '',
+      Azimut: '',
+      comment: '',
     });
   };
   const handleCopy = () => {
@@ -423,30 +481,24 @@ export const WellTable  = () => {
   };
 //raw selection
 
-const handleRowSelect = (row:any) => {
-    console.log(row)
-    if (selectedRows.includes(row)) {
-       
-      setSelectedRows(selectedRows.filter((selectedRow:any) => selectedRow !== row));
-      console.log(selectedRows);
-    } else {
-      setSelectedRows([...selectedRows, row]);
-      console.log(selectedRows)
-    }
-  };
   
   const handleCopySelected = () => {
-   
-    const copiedText = rows
-    .filter((row) => selectedRows.includes(row))
+   console.log(rows)
+   const rowsFilt = rows.map((cell) => cell.original)
+   console.log(rowsFilt)
+   console.log(selectedRows)
+   const selectedIds = selectedRows.map((row) => row.id);
+  
+    const copiedText = rowsFilt
+    .filter((row) => selectedIds.includes(row.id))
     .map((row) =>
       columns
         .slice(1,) // Выбираем только колонки с инпутами
-        .map((column:any) => row.values[column.accessor])
+        .map((column) => row[column.accessor as keyof typeof row])
         .join('\t')
     )
     .join('\n');
-  
+	console.log(copiedText);
     navigator.clipboard.writeText(copiedText).then(
       () => {
         console.log('Selected rows data copied to clipboard');
@@ -458,12 +510,23 @@ const handleRowSelect = (row:any) => {
   };
   const columns: Column<DataRow>[]  = React.useMemo(
     () => [
+	{
+		Header: '', // Заголовок для столбца с чекбоксами
+		id: 'selection',
+		Cell: ({ row }: { row: any }) => (
+		  <input
+			type="checkbox"
+			checked={selectedRows.some((r) => r.id === row.values.id)}
+			onChange={() => handleRowSelect(row)}
+		  />
+		),
+	  },
       {
-        Header: 'ID',
+        Header: 'инд-р',
         accessor: 'id',
       },
       {
-        Header: 'Depth',
+        Header: 'Глубина',
         accessor: 'depth',
         Cell: ({ row, value } : { row: any; value: any }) => (
             <input
@@ -472,9 +535,10 @@ const handleRowSelect = (row:any) => {
         
             />
           ),
+		  sortType: 'basic', // Добавьте это
       },
       {
-        Header: 'CX',
+        Header: 'Gx',
         accessor: 'CX',
         Cell: ({ row, value }: { row: any; value: any }) => (
           <input
@@ -485,7 +549,7 @@ const handleRowSelect = (row:any) => {
         ),
       },
       {
-        Header: 'CY',
+        Header: 'Gy',
         accessor: 'CY',
         Cell: ({ row, value }: { row: any; value: any }) => (
           <input
@@ -495,7 +559,7 @@ const handleRowSelect = (row:any) => {
         ),
       },
       {
-        Header: 'CZ',
+        Header: 'Gz',
         accessor: 'CZ',
         Cell: ({ row, value }: { row: any; value: any }) => (
           <input
@@ -504,15 +568,125 @@ const handleRowSelect = (row:any) => {
           />
         ),
       },
+	  {
+        Header: 'Bx',
+        accessor: 'BX',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'BX', e.target.value)}
+          />
+        ),
+      },
+	  {
+        Header: 'By',
+        accessor: 'BY',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'BY', e.target.value)}
+          />
+        ),
+      },
+	  {
+        Header: 'Bz',
+        accessor: 'BZ',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'BZ', e.target.value)}
+          />
+        ),
+      },
+	  {
+        Header: 'Gtotal',
+        accessor: 'Gtotal',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'Gtotal', e.target.value)}
+          />
+        ),
+      },
+	  {
+        Header: 'Btotal_raw',
+        accessor: 'Btotal_raw',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'Btotal_raw', e.target.value)}
+          />
+        ),
+      },
+	  {
+        Header: 'Btotal_corr',
+        accessor: 'Btotal_corr',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'Btotal_corr', e.target.value)}
+          />
+        ),
+      },
+	  {
+        Header: 'Dip_raw',
+        accessor: 'DIP_raw',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'DIP_raw', e.target.value)}
+          />
+        ),
+      },
+	  {
+        Header: 'Dip_corr',
+        accessor: 'DIP_corr',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'DIP_corr', e.target.value)}
+          />
+        ),
+      },
+	  {
+        Header: 'Зенитный угол',
+        accessor: 'Zenit',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'Zenit', e.target.value)}
+          />
+        ),
+      },
+	  {
+        Header: 'Магнитный азимут',
+        accessor: 'Azimut',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'Azimut', e.target.value)}
+          />
+        ),
+      },
+	  {
+        Header: 'Комментарии',
+        accessor: 'comment',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'comment', e.target.value)}
+          />
+        ),
+      },
       {
-        Header: 'Actions',
+        Header: 'action',
         Cell: ({ row}: { row: any; value: any }) => (
             <DeleteOutlined  type="delete" className="ml10" onClick={() => handleDeleteRow(row)}/>
      
         ),
       },
     ],
-    []
+    [selectedRows]
   );
   
   //изменение
@@ -543,11 +717,24 @@ const handleRowSelect = (row:any) => {
     prepareRow,
   } = useTable(
     {
-      columns,
-      data: tableData,
-    },
-    useSortBy
+		columns,
+		data: tableData,
+	  },
+	  useSortBy,
+	  useRowSelect
   );
+
+  
+  const handleRowSelect = (row: any) => {
+	if (selectedRows.some((r) => r.id === row.values.id)) {
+	  setSelectedRows((prevSelectedRows: Row<DataRow>[]) =>
+		prevSelectedRows.filter((selectedRow) => selectedRow.id !== row.values.id)
+	  );
+	} else {
+	  setSelectedRows((prevSelectedRows: Row<DataRow>[]) => [...prevSelectedRows, row.values]);
+	}
+	console.log(selectedRows)
+  };
 
   //вставка данных
   
@@ -562,6 +749,17 @@ const handleRowSelect = (row:any) => {
           CX: values[1] || '',
           CY: values[2] || '',
           CZ: values[3] || '',
+		  BX: values[4] || '',
+		  BY: values[5] || '',
+		  BZ: values[6] || '',
+		  Gtotal:values[7] || '',
+		  Btotal_raw: values[8] || '',
+		  Btotal_corr: values[9] || '',
+		  DIP_raw: values[10] || '',
+		  DIP_corr: values[11] || '',
+		  Zenit: values[12] || '',
+		  Azimut: values[13] || '',
+		  comment: values[14] || '',
         }));
         
         setTableData([...tableData, ...newRows]);
@@ -569,21 +767,52 @@ const handleRowSelect = (row:any) => {
     });
   };
   
+  //сортировка
+  const handleSort = (field: keyof DataRow) => {
+	
+    setTableData((prevData: DataRow[]) => {
+      const sortedData = [...prevData].sort((a, b) => {
+        if (a[field] < b[field]) {
+			console.log(a[field])
+          return -1;
+        }
+        if (a[field] > b[field]) {
+			console.log(a[field])
+          return 1;
+        }
+        return 0;
+      });
+
+      return sortedData;
+	
+    });
+	console.log(tableData)
+  };
+
+
+
   return (
     <div>
-          <button onClick={handlePaste}>Вставить</button>    
-    <button onClick={handleAddRow}>Добавить строку</button>
+         <button onClick={handlePaste}>Вставить</button>    
+        <button onClick={handleAddRow}>Добавить строку</button>
         <button onClick={handleCopy}>Copy all</button>
         <button onClick={handleCopyLast}>Copy Last </button>
         <button onClick={handleCopySelected}>copy selected</button>
+		<div className={styles.table}>
       {/* <button onClick={handlePaste}>Paste</button>  */}
-      <table {...getTableProps()} style={{ border: 'solid 1px black' }}>
-      <thead>
+      <table {...getTableProps()} className={styles.table__container}>
+      <thead className={styles.table__header}>
 	  {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
+          <tr {...headerGroup.getHeaderGroupProps( )}>
             {headerGroup.headers.map((column : Column<DataRow> & HeaderGroup<DataRow>) => (
-           <th>
+           <th {...column.getHeaderProps()} className={styles.table__head}>
                 {column.render('Header')}
+				{column.id === 'select' && (
+            <span>Select All</span>
+          )}
+				{column.id === 'depth' && (
+                    <button onClick={() => handleSort('depth')}>Sort</button>
+                  )}
                </th>
             ))}
   </tr>
@@ -593,17 +822,10 @@ const handleRowSelect = (row:any) => {
         {rows.map((row) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()}>
-                  <td>
-          <input
-            type="checkbox"
-            checked={selectedRows.includes(row)}
-            onChange={() => handleRowSelect(row)}
-          />
-        </td>
-              {row.cells.map((cell) => {
+            <tr {...row.getRowProps()}  className={styles.table__row}>
+                      {row.cells.map((cell) => {
                 return (
-                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  <td {...cell.getCellProps()} className={styles.table__item}>{cell.render('Cell')}</td>
                 );
               })}
             </tr>
@@ -612,6 +834,7 @@ const handleRowSelect = (row:any) => {
       </tbody>
     </table>
     </div>
+	</div>
    
   );
 };
