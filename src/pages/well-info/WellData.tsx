@@ -106,7 +106,12 @@ const WellData = () => {
             location.pathname.includes("/run")) && (
             <WellParametersCard {...currentWell} />
           )}
-          {location.pathname.includes("/survey") && <WellTable />}
+          {location.pathname.includes("/survey") 
+          && <WellTable
+          selectRun={currentRun}
+          selectWell={currentWell}
+          coefficients={coefficients}
+           />}
         </div>
       </div>
     </>

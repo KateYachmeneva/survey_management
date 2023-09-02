@@ -166,7 +166,7 @@ export const getRunByIdRequestApi = (id: number) => {
 };
 
 export const getCoeffByIdRequestApi = (id: number) => {
-  return apiRequest<ICoeffData>(`${API_URL_AXES}/telesystem_coef/${id}`, {
+  return apiRequest<ICoeffData>(`${API_URL_AXES}/telesystem/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json;charger=utf-8",

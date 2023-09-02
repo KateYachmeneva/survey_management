@@ -2,11 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useTable, useSortBy, HeaderGroup,Column, UseSortByColumnProps, Row, useRowSelect } from 'react-table';
 import { v4 as uuidv4 } from 'uuid'; 
 import { DeleteOutlined } from '@ant-design/icons';
+import { useSelector, useDispatch } from "../../services/hooks";
 import styles from "./well-table.module.scss";
+import { RowData } from '@tanstack/react-table';
 
 interface DataRow {
 	id: any;
 	depth: any;
+	CX_raw: any;
+	CY_raw: any;
+	CZ_raw: any;
+	BX_raw:any;
+	BY_raw:any;
+	BZ_raw:any;
 	CX: any;
 	CY: any;
 	CZ: any;
@@ -20,13 +28,23 @@ interface DataRow {
 	DIP_corr:any;
 	Zenit?:any;
 	Azimut?:any;
+	Azimut_Grid?:any;
 	comment:any;
+	instatistics?:any;
 	isSorted?:any;
 	// Add other properties as needed
   }
 
 
-export const WellTable  = () => {
+export const WellTable  = ({selectRun, selectWell,coefficients}: { selectRun: any; selectWell: any; coefficients: any })  => {
+	const {dec,grid_convergence} = useSelector((store) =>store.wells.currentWell)
+	console.log(selectRun)
+	console.log(selectWell)
+	console.log(coefficients)
+	console.log(typeof(coefficients.CX))
+	let CXcoeff = coefficients.CX
+	let CYcoeff = coefficients.CY
+	
 	const preData = React.useMemo(
        () => [
 			{
@@ -376,8 +394,63 @@ export const WellTable  = () => {
 			},
 		],
 		[]
-	  )
-	  function calculateZenit(CX:any, CY:any, CZ:any) {
+	  )	
+	
+		
+	function calculateCX_raw( CX:any, CXcoeff:any) {
+	
+		let res = CX-CXcoeff
+     
+		return CX-CXcoeff
+	  }
+	  		
+	function calculateCY_raw ( CY:any, CYcoeff:any) {
+		console.log(CYcoeff)
+       if(CYcoeff){
+		const match = CYcoeff.match(/\/([\d.]+)/);
+	  
+       let result
+       if (match) {
+           // Получаем найденное число как строку
+           const numberAsString = match[1];
+        
+           // Преобразуем строку в число с плавающей точкой
+           const number = parseInt(numberAsString);
+         console.log(number)
+           if (!isNaN(number)) {
+             // Выполняем деление
+            
+			 return CY * number;
+              // Выводит результат деления
+           } else {
+             console.log("Неверное число в строке.");
+           }
+         } else {
+           console.log("Число не найдено в строке.");
+         }
+       
+       }
+	   else {
+		let result =""
+		return result
+	   }
+	}
+	function calculateDIP(CX:any, CY:any, CZ:any,BX:any, BY:any, BZ:any) {
+		function degrees(radians:any) {
+			return radians * (180 / Math.PI);
+		}
+	
+		const dotProduct = CX * BX + CY * BY + CZ * BZ;
+		const magnitudeC = Math.sqrt(CX ** 2 + CY ** 2 + CZ ** 2);
+		const magnitudeB = Math.sqrt(BX ** 2 + BY ** 2 + BZ ** 2);
+	
+		const angleInRadians = Math.asin(dotProduct / (magnitudeC * magnitudeB));
+		const angleInDegrees = degrees(angleInRadians);
+	
+		return Math.abs(Math.round(angleInDegrees * 100) / 100);
+	}
+	
+	function calculateZenit(CX:any, CY:any, CZ:any) {
 		function degrees(radians:any) {
 		  return radians * (180 / Math.PI);
 		}
@@ -386,26 +459,118 @@ export const WellTable  = () => {
 		  degrees(Math.acos(CZ / Math.sqrt(CX ** 2 + CY ** 2 + CZ ** 2))) * 100
 		) / 100;
 	  }
-	 
+	function calculateGtotal(CX:any, CY:any, CZ:any) {
+		return (Math.sqrt(CX ** 2 + CY ** 2 + CZ ** 2)).toFixed(5);
+	  }
+	function calculateBtotal(BX:any, BY:any, BZ:any) {
+		return (Math.sqrt(BX ** 2 + BY ** 2 + BZ ** 2)).toFixed(1);
+	  }
+	function calculateAzimuth(CX:any, CY:any, CZ:any,BX:any, BY:any, BZ:any) {
+
+		function degrees(radians:any) {
+		return radians * (180 / Math.PI);
+		  }
+		// const HSTF = Math.atan(CY/(-CX))
+		// const INCL = Math.acos(CZ/ Math.sqrt(CX ** 2 + CY ** 2 + CZ ** 2))
+
+	
+		const term1 = (CX * BY - CY * BX) * (Math.sqrt(CX ** 2 + CY ** 2 + CZ ** 2));
+	    const term2 = (BZ * (CX ** 2 + CY ** 2)) - (CZ * (CX * BX + CY * BY));
+	    const azimuthInRadians = Math.atan(term1/term2);
+     
+		let azimInDegrees = degrees(azimuthInRadians);
+	
+		if ( azimInDegrees <= 0) {
+			azimInDegrees += 360;
+			
+		}
+		let azim = Math.round(azimInDegrees * 100) / 100;
+		return azim;
+		
+	}
+	function calculateAzimuth_Grid(CX:any, CY:any, CZ:any,BX:any, BY:any, BZ:any, dec:any,grid_convergence:any) {
+
+		function degrees(radians:any) {
+			return radians * (180 / Math.PI);
+		  }
+		// const HSTF = Math.atan(CY/(-CX))
+		// const INCL = Math.acos(CZ/ Math.sqrt(CX ** 2 + CY ** 2 + CZ ** 2))
+
+	
+		const term1 = (CX * BY - CY * BX) * (Math.sqrt(CX ** 2 + CY ** 2 + CZ ** 2));
+	    const term2 = (BZ * (CX ** 2 + CY ** 2)) - (CZ * (CX * BX + CY * BY));
+	    const azimuthInRadians = Math.atan(term1/term2);
+     
+		let azimInDegrees = degrees(azimuthInRadians)+dec-grid_convergence;
+	
+		if ( azimInDegrees <= 0) {
+			azimInDegrees += 360;
+			
+		}
+		let azim = Math.round(azimInDegrees * 100) / 100;
+		return azim;
+		
+	}
+
   const [tableData, setTableData] = useState<DataRow[]>([]);
   const [selectedRows, setSelectedRows] = useState<Row<DataRow>[]>([]);
-
+  interface RowDataItem {
+	id: any;
+	depth: any;
+	CX_raw?: any,
+	CY_raw?: any,
+	CZ_raw?: any,
+	BX_raw?: any,
+	BY_raw?: any,
+	BZ_raw?:any,
+	CX: any;
+	CY: any;
+	CZ: any;
+	BX:any;
+	BY:any;
+	BZ:any;
+	Gtotal?:any;
+	Btotal_raw?:any;
+	Btotal_corr:any;
+	DIP_raw?:any;
+	DIP_corr:any;
+	Zenit?:any;
+	Azimut?:any;
+	Azimut_Grid?:any;
+	comment:any;
+	instatistics?:any;
+	isSorted?:any;
+	// Add other properties as needed
+  }
   useEffect(() => {
-	const data = preData.map(item => ({
+	const data = preData.map((item: RowDataItem) => ({
 	  ...item,
-	  Gtotal: item.Gtotal !== undefined ? item.Gtotal : '',
-	  Btotal_raw: item.Btotal_raw !== undefined ? item.Btotal_raw : '',
+	  CX_raw: calculateCX_raw(item.CX, CXcoeff),
+	  CY_raw: calculateCY_raw(item.CY, CYcoeff),
+	  CZ_raw: item.CZ_raw !== undefined ? item.CZ_raw : '',
+	  BX_raw: item.BX_raw !== undefined ? item.BX_raw : '',
+	  BY_raw: item.BY_raw !== undefined ? item.BY_raw : '',
+	  BZ_raw: item.BZ_raw !== undefined ? item.BZ_raw : '',
+	  Gtotal: calculateGtotal(item.CX, item.CY, item.CZ),
+	  Btotal_raw: calculateBtotal(item.BX, item.BY, item.BZ),
 	  Btotal_corr: item.Btotal_corr !== undefined ? item.Btotal_corr : '',
-	  DIP_raw: item.DIP_raw !== undefined ? item.DIP_raw : '',
+	  DIP_raw: calculateDIP(item.CX, item.CY, item.CZ,item.BX, item.BY, item.BZ),
 	  DIP_corr: item.DIP_corr !== undefined ? item.DIP_corr : '',
 	  Zenit: calculateZenit(item.CX, item.CY, item.CZ),
-	  Azimut: item.Azimut !== undefined ? item.Azimut : '',
+	  Azimut: calculateAzimuth(item.CX, item.CY, item.CZ,item.BX, item.BY, item.BZ),
+	  Azimut_Grid: calculateAzimuth_Grid(item.CX, item.CY, item.CZ,item.BX, item.BY, item.BZ,dec,grid_convergence),
 	 }));
 	setTableData(data);
-  }, [preData]);
+  }, [preData,coefficients]);
   const [newRow, setNewRow] = useState<DataRow>({
 	id:'',
     depth: '',
+	CX_raw: '',
+	CY_raw: '',
+	CZ_raw: '',
+	BX_raw:'',
+	BY_raw:'',
+	BZ_raw:'',
     CX: '',
     CY: '',
     CZ: '',
@@ -419,6 +584,7 @@ export const WellTable  = () => {
 	DIP_corr: '',
 	Zenit: '',
 	Azimut: '',
+	Azimut_Grid:'',
 	comment: '',
   });
 
@@ -427,6 +593,12 @@ export const WellTable  = () => {
     setNewRow({
 	  id: uuidv4(),
       depth: '',
+	  CX_raw: '',
+	  CY_raw: '',
+	  CZ_raw: '',
+	  BX_raw:'',
+	  BY_raw:'',
+	  BZ_raw:'',	    
       CX: '',
       CY: '',
       CZ: '',
@@ -440,6 +612,7 @@ export const WellTable  = () => {
       DIP_corr: '',
       Zenit: '',
       Azimut: '',
+	  Azimut_Grid:'',
       comment: '',
     });
   };
@@ -447,7 +620,7 @@ export const WellTable  = () => {
     const copiedText = rows
       .map((row) =>
         columns
-          .slice(1, 10) // Выбираем только колонки с инпутами
+          .slice(2, 10) // Выбираем только колонки с инпутами
           .map((column:any) => row.values[column.accessor])
           .join('\t')
       )
@@ -466,7 +639,7 @@ export const WellTable  = () => {
     const lastRow = rows[rows.length - 1];
 
     const copiedText = columns
-      .slice(1, 10) // Выбираем только колонки с инпутами
+      .slice(2, 10) // Выбираем только колонки с инпутами
       .map((column:any) => lastRow.values[column.accessor])
       .join('\t');
 
@@ -493,7 +666,7 @@ export const WellTable  = () => {
     .filter((row) => selectedIds.includes(row.id))
     .map((row) =>
       columns
-        .slice(1,) // Выбираем только колонки с инпутами
+        .slice(2,10) // Выбираем только колонки с инпутами
         .map((column) => row[column.accessor as keyof typeof row])
         .join('\t')
     )
@@ -538,6 +711,67 @@ export const WellTable  = () => {
 		  sortType: 'basic', // Добавьте это
       },
       {
+        Header: 'Gx_raw',
+        accessor: 'CX_raw',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'CX_raw', e.target.value)}
+          
+          />
+        ),
+      },
+      {
+        Header: 'Gy_raw',
+        accessor: 'CY_raw',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'CY_raw', e.target.value)}
+          />
+        ),
+      },
+      {
+        Header: 'Gz_raw',
+        accessor: 'CZ_raw',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'CZ_raw', e.target.value)}
+          />
+        ),
+      },
+	  {
+        Header: 'Bx_raw',
+        accessor: 'BX_raw',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'BX_raw', e.target.value)}
+          />
+        ),
+      },
+	  {
+        Header: 'By_raw',
+        accessor: 'BY_raw',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'BY_raw', e.target.value)}
+          />
+        ),
+      },
+	  {
+        Header: 'Bz_raw',
+        accessor: 'BZ_raw',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'BZ_raw', e.target.value)}
+          />
+        ),
+      },
+	  {
         Header: 'Gx',
         accessor: 'CX',
         Cell: ({ row, value }: { row: any; value: any }) => (
@@ -618,16 +852,7 @@ export const WellTable  = () => {
           />
         ),
       },
-	  {
-        Header: 'Btotal_corr',
-        accessor: 'Btotal_corr',
-        Cell: ({ row, value }: { row: any; value: any }) => (
-          <input
-            value={value}
-            onChange={(e) => handleCellChange(row, 'Btotal_corr', e.target.value)}
-          />
-        ),
-      },
+
 	  {
         Header: 'Dip_raw',
         accessor: 'DIP_raw',
@@ -638,16 +863,7 @@ export const WellTable  = () => {
           />
         ),
       },
-	  {
-        Header: 'Dip_corr',
-        accessor: 'DIP_corr',
-        Cell: ({ row, value }: { row: any; value: any }) => (
-          <input
-            value={value}
-            onChange={(e) => handleCellChange(row, 'DIP_corr', e.target.value)}
-          />
-        ),
-      },
+
 	  {
         Header: 'Зенитный угол',
         accessor: 'Zenit',
@@ -665,6 +881,36 @@ export const WellTable  = () => {
           <input
             value={value}
             onChange={(e) => handleCellChange(row, 'Azimut', e.target.value)}
+          />
+        ),
+      },
+	  {
+        Header: 'Картографический азимут',
+        accessor: 'Azimut_Grid',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'Azimut_Grid', e.target.value)}
+          />
+        ),
+      },
+	  {
+        Header: 'Btotal_corr',
+        accessor: 'Btotal_corr',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'Btotal_corr', e.target.value)}
+          />
+        ),
+      },
+	  {
+        Header: 'Dip_corr',
+        accessor: 'DIP_corr',
+        Cell: ({ row, value }: { row: any; value: any }) => (
+          <input
+            value={value}
+            onChange={(e) => handleCellChange(row, 'DIP_corr', e.target.value)}
           />
         ),
       },
@@ -746,20 +992,27 @@ export const WellTable  = () => {
         const newRows = rowsToPaste.map((values) => ({
           id: uuidv4(),
           depth: values[0] || '',
-          CX: values[1] || '',
-          CY: values[2] || '',
-          CZ: values[3] || '',
-		  BX: values[4] || '',
-		  BY: values[5] || '',
-		  BZ: values[6] || '',
-		  Gtotal:values[7] || '',
-		  Btotal_raw: values[8] || '',
-		  Btotal_corr: values[9] || '',
-		  DIP_raw: values[10] || '',
-		  DIP_corr: values[11] || '',
-		  Zenit: values[12] || '',
-		  Azimut: values[13] || '',
-		  comment: values[14] || '',
+		  CX_raw: values[1] || '',
+	      CY_raw: values[2] || '',
+	      CZ_raw: values[3] || '',
+	      BX_raw: values[4] || '',
+	      BY_raw: values[5] || '',
+	      BZ_raw: values[6] || '',
+          CX: values[7] || '',
+          CY: values[8] || '',
+          CZ: values[9] || '',
+		  BX: values[10] || '',
+		  BY: values[11] || '',
+		  BZ: values[12] || '',
+		  Gtotal:values[13] || '',
+		  Btotal_raw: values[14] || '',
+		  DIP_raw: values[15] || '',
+		  Zenit: values[16] || '',
+		  Azimut: values[17] || '',
+		  Azimut_Grid: values[18] || '',
+		  comment: values[19] || '',
+		  Btotal_corr: values[20] || '',
+		  DIP_corr: values[21]|| '',
         }));
         
         setTableData([...tableData, ...newRows]);
