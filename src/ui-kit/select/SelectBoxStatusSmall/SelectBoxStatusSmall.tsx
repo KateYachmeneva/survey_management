@@ -7,7 +7,7 @@ import { ICustomInputProps } from "../../../types/index";
 const SelectBoxStatusSmall: React.FC<ICustomInputProps<HTMLSelectElement>> = (
   props,
 ) => {
-  console.log(props.style);
+ 
   return (
     <div className="select-group" style={props.style}>
       <div className="label-group">
@@ -90,6 +90,12 @@ const SelectBoxStatusSmall: React.FC<ICustomInputProps<HTMLSelectElement>> = (
               {pad_name}
             </option>
           ))}
+        {!!props.telesystemArr &&
+     Object.keys(props.telesystemArr).map(key => (
+      <option key={props.telesystemArr[key].id} value={props.telesystemArr[key].id} style={{ fontSize: "16px" }}>
+        {props.telesystemArr[key].device_title}
+       </option>
+     ))}
       </select>
     </div>
   );

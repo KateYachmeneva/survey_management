@@ -57,6 +57,7 @@ export type TAddContractor = {
   name: string;
 };
 export interface ICustomInputProps<T> {
+  telesystemArr?: any;
   type?: string;
   style?: object;
   label: string;

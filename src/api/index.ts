@@ -2,7 +2,7 @@ import { TRegisterUserResponse } from "../services/slices/registerSlice";
 import { TGetUserInfo } from "../services/slices/userSlice";
 import { IRigData } from "../services/slices/rigSlice";
 import { IRunData } from "../services/slices/runSlice";
-import { ICoeffData } from "../services/slices/runSlice";
+import { ICoeffData,TelesystemData } from "../services/slices/runSlice";
 import {
   IContractorsResponse,
   IFieldsResponse,
@@ -167,6 +167,15 @@ export const getRunByIdRequestApi = (id: number) => {
 
 export const getCoeffByIdRequestApi = (id: number) => {
   return apiRequest<ICoeffData>(`${API_URL_AXES}/telesystem/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json;charger=utf-8",
+      Authorization: "Bearer " + getCookie("Token"),
+    },
+  });
+};
+export const getAllCoefficients = () => {
+  return apiRequest<TelesystemData[]>(`${API_URL_AXES}/telesystem`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json;charger=utf-8",

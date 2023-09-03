@@ -7,7 +7,7 @@ import { getAllWells } from "../../services/slices/wellsSlice";
 import { getAllCustomers } from "../../services/slices/customersSlice";
 import { getAllFields } from "../../services/slices/fieldSlice";
 import { getAllRigs } from "../../services/slices/rigSlice";
-import { getRun } from "../../services/slices/runSlice";
+import { getAllTelesystemsCoeff } from "../../services/slices/runSlice";
 import "./app.module.scss";
 import ErrorPage from "../../pages/error/ErrorPage";
 import RegisterUser from "../../pages/register/RegisterUser";
@@ -40,6 +40,7 @@ function App() {
     dispatch(getAllRigs());
     dispatch(getAllWells());
     dispatch(getAllFields());
+    dispatch(getAllTelesystemsCoeff());
     // dispatch(getRun())
   }, [dispatch]);
   return (

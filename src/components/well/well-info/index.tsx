@@ -10,7 +10,6 @@ import WellTuneModal from "../../modals/WellTuneModal";
 
 export const WellInfo = () => {
   const { activeDataWell } = useSelector((store) => store.wells);
-  console.log(activeDataWell);
   const { isOpen } = useSelector((store) => store.modal);
 
   const dispatch = useDispatch();

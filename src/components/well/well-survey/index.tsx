@@ -84,7 +84,6 @@ export const WellSurvey = () => {
   }, [coefficients]);
 
   const onSubmit = (e: React.FormEvent): void => {
-    debugger;
     e.preventDefault();
     e.stopPropagation();
     console.log("Отправлены данные:");
@@ -130,9 +129,7 @@ export const WellSurvey = () => {
             value={form.device_title}
             onChange={onChange}
             label="Телесистема:"
-            // extraLabel="Выберите местроождение"
-            // key={key}
-            placeholder="-----"
+             placeholder="-----"
             statusArr={allTelesystems}
           />
           <InputSmall

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getCoeffByIdRequestApi, getRunByIdRequestApi } from "../../api";
+import { getCoeffByIdRequestApi, getRunByIdRequestApi, getAllCoefficients } from "../../api";
 import { setError } from "./appSlice";
 import { CODES } from "../../utils/errors";
 
@@ -27,7 +27,16 @@ export interface ICoeffData {
   BY: string;
   BZ: string;
 }
-
+export interface TelesystemData {
+  id: number;
+  device_title: string;
+  CX: string;
+  CY: string;
+  CZ: string;
+  BX: string;
+  BY: string;
+  BZ: string;
+}
 interface IRunInitialState {
   currentRun: IRunData;
   getRunsRequest: boolean;
@@ -36,6 +45,7 @@ interface IRunInitialState {
   allRuns: IRunData[];
   activeRun: IRunData[];
   coefficients: ICoeffData;
+  allTelesystems:TelesystemData[];
 }
 
 const initialState: IRunInitialState = {
@@ -46,6 +56,7 @@ const initialState: IRunInitialState = {
   allRuns: [],
   activeRun: [],
   coefficients: {} as ICoeffData,
+  allTelesystems:[],
 };
 
 export const getCoefficients = createAsyncThunk(
@@ -61,6 +72,18 @@ export const getCoefficients = createAsyncThunk(
   },
 );
 
+export const getAllTelesystemsCoeff = createAsyncThunk(
+  "run/AllTelesystemCoefficients",
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await getAllCoefficients ();
+      return response;
+    } catch (error) {
+      dispatch(setError(CODES.SERVER_ERR));
+      return rejectWithValue(error);
+    }
+  },
+);
 export const getRun = createAsyncThunk(
   "run/run_by_well",
   async (id: number, { dispatch, rejectWithValue }) => {
@@ -79,6 +102,9 @@ export const runSlice = createSlice({
   reducers: {
     selectActiveRun: (state, action) => {
       state.currentRun = action.payload;
+    },
+    getAllTelesystem: (state, action) => {
+      state.allTelesystems = action.payload;
     },
   },
   extraReducers(builder) {
@@ -110,6 +136,22 @@ export const runSlice = createSlice({
       state.coefficients = action.payload;
     });
     builder.addCase(getCoefficients.rejected, (state) => {
+      state.getRunsRequest = false;
+      state.getRunsSuccess = false;
+      state.getRunsFailed = true;
+    });
+    builder.addCase(getAllTelesystemsCoeff.pending, (state) => {
+      state.getRunsRequest = true;
+      state.getRunsSuccess = false;
+      state.getRunsFailed = false;
+    });
+    builder.addCase(getAllTelesystemsCoeff.fulfilled, (state, action) => {
+      state.getRunsRequest = false;
+      state.getRunsSuccess = true;
+      state.getRunsFailed = false;
+      state.allTelesystems = [...action.payload] ;
+    });
+    builder.addCase(getAllTelesystemsCoeff.rejected, (state) => {
       state.getRunsRequest = false;
       state.getRunsSuccess = false;
       state.getRunsFailed = true;
