@@ -11,9 +11,11 @@ import { useSelector } from "../../../services/hooks";
 import styles from "./well-run.module.scss";
 
 export const WellRun = () => {
-  const dispatch = useDispatch();
-  const { activeDataWell } = useSelector((store) => store.wells);
-
+  const dispatch = useDispatch()
+  const { activeDataWell } = useSelector((store) => store.wells)
+  const {currentWell} = useSelector((store) =>store.wells)
+  const {currentRun} = useSelector((store) =>store.runs)
+  console.log(currentRun)
   return (
     <>
       <div className={styles.wellact__box}>
@@ -24,7 +26,7 @@ export const WellRun = () => {
           </p>
           <p className={styles.wellact__number}>
             Куст {activeDataWell?.pad_name}, Скважина{" "}
-            {activeDataWell?.well_name}, Транспортная секция
+            {activeDataWell?.well_name}, {currentRun.section_name}
           </p>
           <p className={styles.wellact__status}>
             {activeDataWell?.status_drilling}

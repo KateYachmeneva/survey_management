@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import styles from "./well-info.module.scss";
 import { Document, Envelop } from "../../../ui-kit/svg/icons";
 import { useSelector, useDispatch } from "../../../services/hooks";
@@ -7,14 +7,22 @@ import { openModal, closeModal } from "../../../services/slices/modalSlice";
 import Button from "../../../ui-kit/buttons/Button";
 import Modal from "../../../ui-kit/modal/Modal";
 import WellTuneModal from "../../modals/WellTuneModal";
+import { store } from "../../../services/store";
 
 export const WellInfo = () => {
   const { activeDataWell } = useSelector((store) => store.wells);
   const { isOpen } = useSelector((store) => store.modal);
-
-  const dispatch = useDispatch();
+  const {currentRun} = useSelector((store) => store.runs)
+  const [sectionName, setSectionName] = useState(currentRun.section_name);
+   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+
+
+
+  useEffect (() => {
+    setSectionName(currentRun.section_name)
+  },[currentRun])
   const handleOpenModal = () => {
     dispatch(openModal());
   };
@@ -41,7 +49,7 @@ export const WellInfo = () => {
           </p>
           <p className={styles.wellact__number}>
             Куст {activeDataWell?.pad_name}, Скважина{" "}
-            {activeDataWell?.well_name}, Транспортная секция
+            {activeDataWell?.well_name}, {currentRun.section_name}
           </p>
           <p className={styles.wellact__status}>
             {activeDataWell?.status_drilling}

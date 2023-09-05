@@ -124,13 +124,13 @@ export const WellSurvey = () => {
 
       <div className={styles.buttons}>
         <FormCoeff onSubmit={onSubmit} buttonText="Добавить">
-          <SelectBoxStatusSmall
+            <InputSmall
+            type="text"
+            label="Текущие коэффициенты:"
             name="device_title"
             value={form.device_title}
-            onChange={onChange}
-            label="Телесистема:"
-             placeholder="-----"
-            statusArr={allTelesystems}
+            onChange={handleChange}
+            blue={true}
           />
           <InputSmall
             type="text"

@@ -21,9 +21,20 @@ interface IForm {
   CX: string;
   CY: string;
   CZ: string;
+
   BX: string;
   BY: string;
   BZ: string;
+}
+interface InputValues {
+  device_title: string;
+  CX: string;
+  CY: string;
+  CZ: string;
+  BX: string;
+  BY: string;
+  BZ: string;
+  // Добавьте другие свойства по мере необходимости
 }
 
 const WellData = () => {
@@ -39,9 +50,17 @@ const WellData = () => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
   const wellId = useParams().id?.split(":")[1]
   const { coefficients } = useSelector((store) => store.runs)
-  const [coeff, setCoeff] = useState(coefficients);
+  const [coeff, setCoeff] = useState(	{
+    "device_title": "_",
+       "CX": "+0",
+       "CY": "+0",
+       "CZ": "+0",
+       "BX": "+0",
+       "BY": "+0",
+       "BZ": "+0"
+});
   const [allcoeff, setTelesystem] = useState(allTelesystems);
-
+  const [showIcon, setshowIcon] = useState(true);
   const [form, setForm] = useState<IForm>({
     device_title: "",
     CX: "",
@@ -65,6 +84,7 @@ const WellData = () => {
       }
       dispatch(selectActiveDataWell(well));
       dispatch(selectActiveRun(allRuns[0]));
+  
       setCurrentWell(well);
     }
   }, [wellId,currentWell]);
@@ -91,25 +111,56 @@ const WellData = () => {
 
       setCoefficientsLoaded(true); // Устанавливаем флаг, что коэффициенты загружены
     }
-    if (typeof coeff.device_title == "undefined") {
-      setForm({
-        device_title: "",
-        CX: "",
-        CY: "",
-        CZ: "",
-        BX: "",
-        BY: "",
-        BZ: "",
-      });
-      setCoefficientsLoaded(true);
-    }
+    // if (typeof coeff.device_title == "undefined") {
+    //   setForm({
+    //     device_title: "",
+    //     CX: "",
+    //     CY: "",
+    //     CZ: "",
+    //     BX: "",
+    //     BY: "",
+    //     BZ: "",
+    //   });
+    //   setCoefficientsLoaded(true);
+    // }
   }, [coeff,coefficientsLoaded]);
-
+  const [inputValues, setInputValues] = useState<InputValues>({
+    device_title: '_',
+    CX: '',
+    CY: '',
+    CZ: '',
+    BX: '',
+    BY: '',
+    BZ: '',
+  });
+  const [isSubmCoef, setIsSubmCoef] = useState<boolean>(false);
   const onSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
-    e.stopPropagation();
-    console.log("Отправлены данные:");
+
+ 
+  const formCoeff = e.target as HTMLFormElement;
+  const formInputs = formCoeff.querySelectorAll('input')
+
+  const newInputValues: InputValues = Array.from(formInputs).reduce(
+    (accumulator, input) => {
+      const inputName = input.name as keyof InputValues;
+      accumulator[inputName] = input.value;
+
+      return accumulator;
+    
+    },
+    {} as InputValues // Начальное значение аккумулятора
+  );
+  
+  setInputValues(newInputValues);
+  console.log(isSubmCoef)
+  setIsSubmCoef(true)
   };
+
+  useEffect(() => {
+    // Обновляем coeff в useEffect, когда inputValues изменяется
+    setCoeff(inputValues);
+  }, [inputValues]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const value = e.target.value;
@@ -125,7 +176,12 @@ const WellData = () => {
     const newSelectedId = parseInt(event.target.value, 10);
     setSelectedId(newSelectedId);
   };
-
+ useEffect(() => {
+    // Обновляем coeff в useEffect, когда inputValues изменяется
+   if (isSubmCoef){
+    setCoeff(inputValues);
+   }
+  }, [inputValues,isSubmCoef]);
   
   useEffect(() => {
     // Найти объект в массиве, соответствующий выбранному id
@@ -141,15 +197,31 @@ const WellData = () => {
       BZ: selectedObject.BZ,
     });
     setCoeff(selectedObject)
+    setCoefficientsLoaded(true);
   }
 
   }, [selectedId]);
 
   useEffect(() => {
-    console.log(coefficients); // Новое значение coefficients
+
+    if (coefficients.status === 'Коэффициенты не найдены') {
+      setCoeff ({
+        "device_title": "_",
+           "CX": "+0",
+           "CY": "+0",
+           "CZ": "+0",
+           "BX": "+0",
+           "BY": "+0",
+           "BZ": "+0"
+   })	
+    }
+  else {
     setCoeff(coefficients);
-  }, [coefficients]);
-  
+    setCoefficientsLoaded(true);
+  }
+
+  }, [coefficients,coefficientsLoaded]);
+
   if (!currentWell) {
     return <h1>Нажмите на другую ссылку или дождитесь загрузки данных</h1>;
   }
@@ -224,7 +296,7 @@ const WellData = () => {
           )}
           {location.pathname.includes("/survey") 
           && <div>
-          <FormCoeff onSubmit={onSubmit} buttonText="Добавить">
+          <FormCoeff onSubmit={onSubmit} showIcon = {showIcon} buttonText="Добавить">
           <SelectBoxStatusSmall
             name="device_title"
             value={form.device_title}
@@ -268,7 +340,7 @@ const WellData = () => {
           <InputSmall
             type="text"
             label="By"
-            name="device_title"
+            name="BY"
             value={form.BY}
             onChange={handleChange}
             blue={true}
@@ -276,7 +348,7 @@ const WellData = () => {
           <InputSmall
             type="text"
             label="Bz"
-            name="device_title"
+            name="BZ"
             value={form.BZ}
             onChange={handleChange}
             blue={true}

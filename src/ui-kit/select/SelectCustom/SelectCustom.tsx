@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles.scss";
 
-import { ICustomInputProps } from "../../types/index";
+import { ICustomInputProps } from "../../../types/index";
 
 //option сложно стилизовать, надо подумать над этой проблемой
 const SelectCustom: React.FC<ICustomInputProps<HTMLSelectElement>> = (

@@ -24,7 +24,7 @@
 }
 
 .contractors {
-  display: flex;
+  display: grid;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -44,13 +44,23 @@
   }
 
   &__container {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 32%);
+    grid-auto-rows: auto; /* Автоматическая высота строк */
+    grid-auto-flow: row;
+    column-gap: 10px;
+    row-gap: 15px;
+    max-height: 80vh;
+    overflow-y: auto;
   }
-
-  &__column {
-    min-width: 250px;
-    display: flex;
-    margin-right:20px;
-    flex-direction: column;
+  
+  &__inputWithTooltip{
+    
   }
+  // &__column {
+  //   min-width: 250px;
+  //   display: flex;
+  //   margin-right:20px;
+  //   flex-direction: column;
+  // }
 }

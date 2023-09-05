@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./styles.scss";
+import "./stylessmall.scss";
 
 import { ICustomInputProps } from "../../../types/index";
 
@@ -97,7 +97,7 @@ const SelectBoxStatusSmall: React.FC<ICustomInputProps<HTMLSelectElement>> = (
        </option>
      ))}
       </select>
-    </div>
+     </div>
   );
 };
 export default SelectBoxStatusSmall;

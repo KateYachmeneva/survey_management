@@ -2,7 +2,7 @@ import React from "react";
 import cn from "classnames";
 // import Button from "../buttons/Button"
 import styles from "./styles.module.scss";
-import { UpdateIcon } from "../../ui-kit/svg/icons";
+import { UpdateIcon,Save } from "../../ui-kit/svg/icons";
 import { toaster, Tooltip, InfoSignIcon, Position } from "evergreen-ui";
 
 interface IFormContainerProps {
@@ -11,12 +11,14 @@ interface IFormContainerProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   submitError?: string | null;
   loading?: boolean;
+  showIcon?: boolean;
   extClassName?: string;
 }
 
 export function FormCoeff({
   onSubmit,
   submitError,
+  showIcon,
   loading,
   children,
   extClassName,
@@ -34,17 +36,26 @@ export function FormCoeff({
             {submitError}
           </span>
         )}
-        <div className={styles.tooltip_Wrapper}>
-          <button type="submit" className={styles.submitButton}>
+       
+         {showIcon &&  <div className={styles.tooltip_Wrapper}> <button type="submit" className={styles.submitButton}>
             <UpdateIcon /> {/* Вставляем иконку SVG */}
           </button>
           <Tooltip
-            content="Перезапишет коэффициенты для конкретного рейса"
+            content="Переcчитает с учетом введенных вручную коэффициентов"
             position={Position.RIGHT}
           >
             <InfoSignIcon />
-          </Tooltip>
-        </div>
+          </Tooltip> </div>}
+          {!showIcon &&  <div className={styles.tooltip_Wrapper}> <button type="submit" className={styles.submitButton}>
+            <Save /> {/* Вставляем иконку SVG */}
+          </button>
+          <Tooltip
+            content="Сохранит коэффициенты для рейса"
+            position={Position.RIGHT}
+          >
+            <InfoSignIcon />
+          </Tooltip> </div>}
+       
       </div>
     </form>
   );

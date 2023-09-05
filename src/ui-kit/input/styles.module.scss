@@ -27,7 +27,7 @@ $colors: (
 }
 
 @mixin group($mb) {
-  width: 99%;
+  // width: 99%;
   margin-bottom: $mb;
   margin-left: 3px;
 }
@@ -37,10 +37,12 @@ $colors: (
   border: none;
   font-size: 14px;
   font-weight: 500;
-  width: 80px;
+  width:100%;
   gap: 20px;
   outline: none;
   text-indent: 1rem;
+  
+
 }
 .input_group {
   @include group(20px);
@@ -50,6 +52,10 @@ $colors: (
   box-sizing: border-box;
   margin-left: 3px;
   margin-bottom: 0;
+  width:80px;
+  &:nth-child(1) {
+    width: 30%; // Здесь вы можете установить желаемую ширину для первого элемента
+  }
 }
 
 .input_label_group {
@@ -82,5 +88,5 @@ $colors: (
   pointer-events: auto;
 }
 .input_label_group_small{
-  width:60px
+  width:100%;
 }

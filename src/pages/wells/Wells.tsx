@@ -12,6 +12,7 @@ import RigAddModal from "../../components/modals/RigAddModal";
 import { IWellData } from "../../services/slices/wellsSlice";
 import { useSelector } from "../../services/hooks";
 import Modal from "../../ui-kit/modal/Modal";
+import ModalSmall from "../../ui-kit/modal/ModalSmall";
 import { openModal, closeModal } from "../../services/slices/modalSlice";
 import WellsCard from "../../components/wells-card/WellsCard";
 
@@ -58,7 +59,7 @@ const Wells = () => {
     <>
       <section className={styles.contractors}>
         {isOpen && (
-          <Modal
+          <ModalSmall
             closeModal={handleCloseModal}
             title={
               clickedButton === "Добавить скважину"
@@ -68,7 +69,7 @@ const Wells = () => {
           >
             {clickedButton === "Добавить скважину" && <WellAddModal />}
             {clickedButton === "Добавить куст" && <RigAddModal />}
-          </Modal>
+          </ModalSmall>
         )}
         {currentWell && (
           <Navbar

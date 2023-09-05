@@ -5,6 +5,7 @@ import { CODES } from "../../utils/errors";
 
 export interface IRunData {
   id: number;
+  section_name:string;
   run_number: number;
   start_date: Date;
   end_date: Date;
@@ -19,6 +20,7 @@ export interface IRunData {
 }
 
 export interface ICoeffData {
+  status: string;
   device_title: string;
   CX: string;
   CY: string;

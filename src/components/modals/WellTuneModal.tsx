@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, ReactNode } from "react";
 import { IWellData } from "../../services/slices/wellsSlice";
 import { Form } from "../../ui-kit/form/Form";
 import Input from "../../ui-kit/input";
@@ -168,8 +168,7 @@ const WellTuneModal: React.FC<IWellData> = ({
     });
   };
 
-  console.log(form);
-  const onSubmit = (e: React.FormEvent): void => {
+   const onSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
     // Здесь вы можете добавить логику для отправки данных формы на сервер или их обработки
     // Например, можно использовать функцию dispatch для отправки данных через Redux
@@ -208,11 +207,12 @@ const WellTuneModal: React.FC<IWellData> = ({
       });
     }
   };
+
+  
   return (
-    <div className={styles.contractors__input}>
+
       <Form onSubmit={onSubmit} buttonText="Сохранить изменения">
-        <div className={styles.contractors__container}>
-          <div className={styles.contractors__column}>
+            <div className={styles.contractors__container}>
             <Input
               type="text"
               label="ДО"
@@ -265,7 +265,7 @@ const WellTuneModal: React.FC<IWellData> = ({
               placeholder="-----"
               generalArr={arrayStatusDrilling}
             />
-            <SelectBoxStatus
+            <SelectBoxStatus style={{marginTop: '21px' }}
               name="in_statistics"
               value={stat}
               onChange={onChangeBoolean}
@@ -273,7 +273,7 @@ const WellTuneModal: React.FC<IWellData> = ({
               placeholder="-----"
               staticArr={arrayStatusStatistics}
             />
-            <SelectBoxStatus
+             <SelectBoxStatus style={{marginTop: '21px' }}
               name="well_type"
               value={form.well_type}
               onChange={onChange}
@@ -281,7 +281,8 @@ const WellTuneModal: React.FC<IWellData> = ({
               placeholder="-----"
               generalArr={arrayWellType}
             />
-            <Tooltip content="Альтитуда берется из маркшейдерской справки">
+             <div>
+             <Tooltip content="Альтитуда берется из маркшейдерской справки" >
               <InfoSignIcon />
             </Tooltip>
             <Input
@@ -293,8 +294,10 @@ const WellTuneModal: React.FC<IWellData> = ({
               onChange={handleChange}
               blue={true}
             />
+             </div>
+             <div >
             <Tooltip content="Азимут с учетом полной поправки">
-              <InfoSignIcon />
+             <InfoSignIcon />
             </Tooltip>
             <Input
               type="text"
@@ -305,9 +308,9 @@ const WellTuneModal: React.FC<IWellData> = ({
               onChange={handleChange}
               blue={true}
             />
-          </div>
-          <div className={styles.contractors__column}>
-            <Input
+             </div>
+             <div >
+            <Input style={{marginTop: '21px' }}
               type="text"
               label="Система координат"
               placeholder="Введите систему координат"
@@ -316,6 +319,8 @@ const WellTuneModal: React.FC<IWellData> = ({
               onChange={handleChange}
               blue={true}
             />
+             </div>
+              <div>
             <Tooltip content="Данные в формате 61° 07' 10 N">
               <InfoSignIcon />
             </Tooltip>
@@ -328,6 +333,8 @@ const WellTuneModal: React.FC<IWellData> = ({
               onChange={handleChange}
               blue={true}
             />
+            </div>
+            <div>
             <Tooltip content="Данные в формате 76° 34' 15 E">
               <InfoSignIcon />
             </Tooltip>
@@ -340,7 +347,9 @@ const WellTuneModal: React.FC<IWellData> = ({
               onChange={handleChange}
               blue={true}
             />
-            <Input
+            </div>
+            <div>
+            <Input style={{marginTop: '21px' }}
               type="text"
               label="Широта Y (прямоугольные координаты), м"
               placeholder="Введите N/Y"
@@ -349,7 +358,9 @@ const WellTuneModal: React.FC<IWellData> = ({
               onChange={handleChange}
               blue={true}
             />
-            <Input
+              </div>
+              <div>
+              <Input style={{marginTop: '21px' }}
               type="text"
               label="Долгота X (прямоугольные координаты), м"
               placeholder="Введите E/X"
@@ -358,6 +369,8 @@ const WellTuneModal: React.FC<IWellData> = ({
               onChange={handleChange}
               blue={true}
             />
+              </div>
+              <div>
             <Input
               type="text"
               label="Направление на север"
@@ -367,6 +380,8 @@ const WellTuneModal: React.FC<IWellData> = ({
               onChange={handleChange}
               blue={true}
             />
+             </div>
+             <div >
             <Input
               type="text"
               label="Геомагнитная модель"
@@ -376,6 +391,7 @@ const WellTuneModal: React.FC<IWellData> = ({
               onChange={handleChange}
               blue={true}
             />
+             </div>
             <Input
               type="date"
               label="Дата геомагнитной привязки"
@@ -413,7 +429,7 @@ const WellTuneModal: React.FC<IWellData> = ({
               onChange={handleChange}
               blue={true}
             />
-            <Input
+             <Input style={{marginTop: '21px' }}
               type="text"
               label="Btotal"
               placeholder="Напряженность геомагнитного поля, нТл"
@@ -422,7 +438,7 @@ const WellTuneModal: React.FC<IWellData> = ({
               onChange={handleChange}
               blue={true}
             />
-            <Input
+              <Input style={{marginTop: '21px' }}
               type="text"
               label="Gtotal"
               placeholder="Введите Gtotal"
@@ -431,6 +447,7 @@ const WellTuneModal: React.FC<IWellData> = ({
               onChange={handleChange}
               blue={true}
             />
+            <div>
             {((65 <= critical_azim && critical_azim <= 115) ||
               (245 <= critical_azim && critical_azim >= 295)) && (
               <Tooltip content={`Критический азимут ${critical_azim}`}>
@@ -445,6 +462,7 @@ const WellTuneModal: React.FC<IWellData> = ({
               placeholder="-----"
               staticArr={arrayStatusStatistics}
             />
+            </div>
             <Input
               type="date"
               label="Начало сопровождения до Т1"
@@ -499,7 +517,7 @@ const WellTuneModal: React.FC<IWellData> = ({
               onChange={handleChange}
               blue={true}
             />
-            <Input
+            <Input 
               type="text"
               label='Список рассылки почта "Копия"'
               placeholder='Введите адреса через ";"'
@@ -509,9 +527,8 @@ const WellTuneModal: React.FC<IWellData> = ({
               blue={true}
             />
           </div>
-        </div>
       </Form>
-    </div>
+   
   );
 };
 

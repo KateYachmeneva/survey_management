@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles.scss";
+import "./stylesselect.scss";
 
 import { ICustomInputProps } from "../../../types/index";
 
@@ -8,7 +8,7 @@ const SelectBoxStatus: React.FC<ICustomInputProps<HTMLSelectElement>> = (
   props,
 ) => {
   return (
-    <div className="select-group" style={props.style}>
+    <div className="select-group_modal" style={props.style}>
       <div className="label-group">
         {!!props.label && (
           <label htmlFor={props.label} className="select-label">

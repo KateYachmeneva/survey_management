@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTable, useSortBy, HeaderGroup,Column, Row, useRowSelect } from 'react-table';
 import { v4 as uuidv4 } from 'uuid'; 
 import { DeleteOutlined } from '@ant-design/icons';
+import { Sort } from "../../ui-kit/svg/icons";
 import { useSelector, useDispatch } from "../../services/hooks";
 import styles from "./well-table.module.scss";
 import "./well-table.module.scss"; 
@@ -39,7 +40,19 @@ interface DataRow {
 //({selectRun, selectWell}: { selectRun: any; selectWell: any;}) 
 export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 	const {dec,grid_convergence} = useSelector((store) =>store.wells.currentWell)
-	console.log(coefficients)
+
+	if (Object.keys(coefficients).length === 0 ) {
+		coefficients = 	{
+			   "device_title": "_",
+		        "CX": "+0",
+		        "CY": "+0",
+		        "CZ": "+0",
+		        "BX": "+0",
+		        "BY": "+0",
+		        "BZ": "+0"
+		}
+	}
+
 	let CXcoeff = coefficients.CX
 	let CYcoeff = coefficients.CY
 	let CZcoeff = coefficients.CZ
@@ -267,27 +280,29 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 		
 	function calculateCxyzConv( G:any, Gcoeff:any) {
 		if(Gcoeff){
-		 const match = Gcoeff.match(/\/([\d.]+)/) // ищет "/100"
-		 const match1 = Gcoeff.match(/(-\d+)/);// ищет "-100"
-		 const match2 = Gcoeff.match(/\*\(-(\d+)\)/);// ищет "*(-100)"
-		 const match3 = Gcoeff.match(/[*-]([\d.]+)/)  // ищет "*-100"
-	
+		 const match = Gcoeff.match(/(\/)(\d+)(?!\.\d+)/) // ищет "/100" но не искало /9,81
+		 const match1 = Gcoeff.match(/(?<!\()\-(\d+)/);// ищет "-100"	/(?<!\()\-(\d+)/
+		 const match2 = Gcoeff.match(/\*\(\-(\d+)\)/);// ищет "*(-100)"
+		 const match3 = Gcoeff.match(/[*][-]([\d.]+)/)  // ищет "*-100"
+		 const match4 = Gcoeff.match(/\/(\d+\.\d+)/) // ищет "/9.81"
+		 const match5 = Gcoeff.match(/^(\*)(\d+)$/)  // ищет "*100"
+		 const match6 = Gcoeff.match(/\/\((-)(\d+\.\d+)\)/) // ищет "/(-9.81)"
+		 const match7 = Gcoeff.match(/\/\((-)(\d+\))/) // ищет "/(-100)"
 		if (match) {
 	  
-			const numberAsString = match[0];
-			const number = parseInt(numberAsString);
+			const number = parseInt(match[2], 10);
 		
 			if (!isNaN(number)) {
-			
+				console.log(number)   
 			  return G / number;
 																													  
 			}
 		}
 		if (match1) {
-	  			const number = parseInt(match1[0], 10);
-		
+	  			const number = parseInt(match1[1], 10);
+				
 			 if (!isNaN(number)) {
-					 
+				console.log(number) 	 
 		   return  G * (-number);
 																													   
 		 } else {
@@ -295,11 +310,11 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 		 } 
 	 }
 	 if (match2) {
-     	
-		const number = parseInt(match2[0], 10);
+		console.log('s')
+		const number = parseInt(match2[1], 10);
      
         if (!isNaN(number)) {
-     		   
+     		console.log(number)   
       return  G * (-number);
      																											 
      } else {
@@ -308,15 +323,55 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
      }
 	 if (match3) {
 	  
-		const number = parseInt(match3[0], 10);
+		const number = parseInt(match3[1], 10);
 		
 	 if (!isNaN(number)) {
-				 
+		console.log(number) 	 
 	   return  G * (-number);
 																												   
 	 }
    }
-		else  {
+   if (match4) {
+	  
+	const number = parseFloat(match4[1])
+	
+    if (!isNaN(number)) {
+   	  console.log(number) 	 
+      return  G / (number);
+     }
+   }
+   if (match5) {
+
+	const number = parseInt(match5[2], 10);
+	
+   if (!isNaN(number)) {
+		 
+   return  G * (number);
+																											   
+   }
+  }
+  if (match6) {
+
+	const number = parseFloat(match6[2]);
+	
+   if (!isNaN(number)) {
+	console.log(number)
+	console.log(G)
+   return  G / (-number);
+																											   
+   }
+  }
+  if (match7) {
+
+	const number = parseInt(match7[2],10);
+	
+   if (!isNaN(number)) {
+		 
+   return  G / (-number);
+																											   
+   }
+  }
+   else  {
 			 return G
 		}
 	  }
@@ -325,39 +380,43 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
     function calculateBxyzConv ( B:any, Bcoeff:any) {
 		
 		if(Bcoeff){
-			const match = Bcoeff.match(/\/([\d.]+)/) // ищет "/100"
-			const match1 = Bcoeff.match(/(-\d+)/);// ищет "-100"
-			const match2 = Bcoeff.match(/\*\(-(\d+)\)/);// ищет "*(-100)"
-			const match3 = Bcoeff.match( /^(\*)(-)(\d+)$/)  // ищет "*-100"
+			const match = Bcoeff.match(/(\/)(\d+)/)// ищет "/100"
+			const match1 = Bcoeff.match(/(?<!\()\-(\d+)/);// ищет "-100"
+			const match2 = Bcoeff.match(/\*\((-\d+)\)/);// ищет "*(-100) (/\*\(\-(\d+)\)/)
+			const match3 = Bcoeff.match( /\\*\\-(\\d+)/)  // ищет "*-100"
 			const match4 = Bcoeff.match(/^(\*)(\d+)$/)  // ищет "*100"
+			const match5 = Bcoeff.match(/\*\-\((\d+)\)/)  // ищет "*-(100000) "
+			const match6 = Bcoeff.match(/\/(\d+\.\d+)/) // ищет "/9.81"
+			const match7 = Bcoeff.match(/\/\((-)(\d+\.\d+)\)/) // ищет "/(-9.81)"
+			const match8 = Bcoeff.match(/\/\((-)(\d+\))/) // ищет "/(-100)"
 		   if (match) {
 		 
-			   const numberAsString = match[0];
-			   const number = parseInt(numberAsString);
-		    console.log(number)
-			   if (!isNaN(number)) {
-			   
-				 return B / number;
-																														 
-			   }
+			const number = parseInt(match[2], 10);
+		
+			if (!isNaN(number)) {
+				console.log(number)   
+			  return B / number;
+																													  
+			}
 		   }
 		   if (match1) {
-					 const number = parseInt(match1[0], 10);
-					 console.log(number)
+			
+					 const number = parseInt(match1[1], 10);
+					console.log(number)
 				if (!isNaN(number)) {
 						
-			  return  B * (number);
+			  return  B * (-number);
 																														  
 			} else {
 			  return ""
 			} 
 		}
 		if (match2) {
-			
-		   const number = parseInt(match2[0], 10);
-		   console.log(number)
-		   if (!isNaN(number)) {
-				   
+			console.log('s')
+		   const number = parseInt(match2[1], 10);
+		console.log(number)
+		     if (!isNaN(number)) {
+				console.log(number)	   
 		 return  B * (-number);
 																													 
 		} else {
@@ -365,11 +424,11 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 		 } 
 		}
 		if (match3) {
-		 
-		   const number = parseInt(match3[3], 10);
+			console.log('s')
+		   const number = parseInt(match3[1], 10);
 		   console.log(number)
 		if (!isNaN(number)) {
-			console.log(B)	
+			console.log(number)
 		  return  B * (-number);
 																										  
 		}
@@ -378,12 +437,54 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 
 		const number = parseInt(match4[2], 10);
 		
-	 if (!isNaN(number)) {
-				 
+	   if (!isNaN(number)) {
+			
 	   return  B * (number);
 																												   
-	 }
-   }
+	  }
+    }
+	if (match5) {
+
+		const number = parseInt(match5[1], 10);
+		
+	   if (!isNaN(number)) {
+			 console.log (B)
+	   return  B * (-number);
+																												   
+	  }
+    }
+	if (match6) {
+	  
+		const number = parseFloat(match6[1])
+		
+		if (!isNaN(number)) {
+			 console.log(number) 	 
+		  return  B / (number);
+		 }
+	   }
+
+	if (match7) {
+
+		const number = parseFloat(match7[2]);
+		
+	   if (!isNaN(number)) {
+		console.log(number)
+		console.log(B)
+	   return  B / (-number);
+																												   
+	   }
+	  }
+	   
+	  if (match8) {
+
+		const number = parseInt(match8[2],10);
+		
+	   if (!isNaN(number)) {
+			 
+	   return  B / (-number);
+																												   
+	   }
+	  }
 		   else  {
 				return B
 		   }
@@ -497,7 +598,7 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
   useEffect(() => {
 	const data = preData.map((item: RowDataItem) => {
 		const calculatedCX = calculateCxyzConv(item.CX_raw, CXcoeff);
-		console.log(CXcoeff)
+		
 	    const calculatedCY = calculateCxyzConv( item.CY_raw,CYcoeff);
 		const calculatedCZ = calculateCxyzConv( item.CZ_raw,CZcoeff);
 		const calculatedBX = calculateBxyzConv( item.BX_raw,BXcoeff);
@@ -1033,7 +1134,7 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
             <span>Select All</span>
           )}
 				{column.id === 'depth' && (
-                    <button onClick={() => handleSort('depth')}>Sort</button>
+                    <button className={styles.sortBtn} onClick={() => handleSort('depth')}><Sort/></button>
                   )}
                </th>
             ))}

@@ -8,6 +8,8 @@ const WellInfoCard: React.FC<any> = ({
   selectWell,
   telesystem_type,
 }) => {
+  //нужно забрать current_depth ,когда переедет на 9613
+
   return (
     <>
       <ul className={styles.welldata__info}>
@@ -38,14 +40,14 @@ const WellInfoCard: React.FC<any> = ({
         <li className={styles.welldata__item}>
           <p className={styles.welldata__name}>Текущий забой</p>
           <p className={styles.welldata__data}>
-            <span className={styles.welldata__data_bold}>current_depth</span>
+                  <span className={styles.welldata__data_bold}>_</span>
           </p>
         </li>
         <li className={styles.welldata__item}>
           <p className={styles.welldata__name}>Секция</p>
           <p className={styles.welldata__data}>
             <span className={styles.welldata__data_bold}>
-              {selectRun.section}
+              {selectRun.section_name}
             </span>
           </p>
         </li>
