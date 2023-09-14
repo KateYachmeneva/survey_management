@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./stylessmall.scss";
 
 import { ICustomInputProps } from "../../../types/index";
@@ -9,7 +9,7 @@ const SelectBoxStatusSmall: React.FC<ICustomInputProps<HTMLSelectElement>> = (
 ) => {
  
   return (
-    <div className="select-group" style={props.style}>
+    <div className="select-group-small" style={props.style}>
       <div className="label-group">
         {!!props.label && (
           <label htmlFor={props.label} className="select-label">
@@ -30,7 +30,7 @@ const SelectBoxStatusSmall: React.FC<ICustomInputProps<HTMLSelectElement>> = (
       </div>
       <select
         name={props.name}
-        className={!!props.blue ? "select-blue" : "select-yellow"}
+        className={!!props.blue ? "select-blu" : "select-yell"}
         id={props.label}
         required
         defaultValue={"DEFAULT"}

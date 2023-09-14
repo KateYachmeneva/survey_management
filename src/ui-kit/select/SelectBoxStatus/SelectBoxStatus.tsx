@@ -7,9 +7,10 @@ import { ICustomInputProps } from "../../../types/index";
 const SelectBoxStatus: React.FC<ICustomInputProps<HTMLSelectElement>> = (
   props,
 ) => {
+  console.log(props)
   return (
     <div className="select-group_modal" style={props.style}>
-      <div className="label-group">
+      <div className="label-group-medium">
         {!!props.label && (
           <label htmlFor={props.label} className="select-label">
             {props.label}

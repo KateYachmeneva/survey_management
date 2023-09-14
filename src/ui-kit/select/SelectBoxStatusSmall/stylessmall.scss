@@ -5,14 +5,14 @@
 }
 
 @mixin group($mb) {
-    // width: 45%;
+    width: 250px;
     margin-bottom: $mb;
     margin-left:3px;
 }
 
 $colors: (
-  yellow: #F6CF00,
-  blue: #1771E6
+  yell: #F6CF00,
+  blu: #1771E6
 );
 
 %custom-label {
@@ -22,7 +22,7 @@ $colors: (
 
 %custom-select {
     @include appearance(none);
-    height: 25px;
+    height: 22px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
     border: none;
     border-radius: 5px !important;
@@ -42,6 +42,7 @@ $colors: (
             @if $status == blue {
                 background: url(../../svg/arrowBlue.svg) no-repeat right;
                 background-position-x: calc(100% - 1rem);
+                width: inherit;
             }
             &:focus {
                 outline: 3px solid $color;
@@ -50,13 +51,12 @@ $colors: (
     }
 }
 
-.select-group {
-    width: 30%;
-    @include group(0px);
+.select-group-small {
+      @include group(0px);
 }
 
 .label-group {
-   
+   width:250px;
     @include group(2px);
 }
 
@@ -68,5 +68,6 @@ $colors: (
     @extend %custom-label;
     color: map-get($colors , yellow );
     float: right;
-    cursor: pointer;  
+    cursor: pointer;
+   
 }

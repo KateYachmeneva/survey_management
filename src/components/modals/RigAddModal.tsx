@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Input from "../../ui-kit/input";
 import { Form } from "../../ui-kit/form/Form";
 import { toaster } from "evergreen-ui";

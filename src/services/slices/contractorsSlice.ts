@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { IContractorData, TAddContractor } from "../../types";
+import { IContractorData} from "../../types";
 import {
   addContractorRequestApi,
   deleteContractorRequestApi,
@@ -7,7 +7,7 @@ import {
 } from "../../api";
 import { setError } from "./appSlice";
 import { CODES } from "../../utils/errors";
-import { useSelector } from "../../services/hooks";
+
 
 export interface IContractorChart {
   name: string;

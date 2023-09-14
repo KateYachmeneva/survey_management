@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "../../services/hooks";
 import styles from "./well-table.module.scss";
 import "./well-table.module.scss"; 
 import { RowData } from '@tanstack/react-table';
+import { Delete } from "../../ui-kit/svg/icons";
 
 interface DataRow {
 	id: any;
@@ -299,7 +300,7 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 			}
 		}
 		if (match1) {
-	  			const number = parseInt(match1[1], 10);
+	  		const number = parseInt(match1[1], 10);
 				
 			 if (!isNaN(number)) {
 				console.log(number) 	 
@@ -310,7 +311,7 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 		 } 
 	 }
 	 if (match2) {
-		console.log('s')
+		
 		const number = parseInt(match2[1], 10);
      
         if (!isNaN(number)) {
@@ -380,7 +381,7 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
     function calculateBxyzConv ( B:any, Bcoeff:any) {
 		
 		if(Bcoeff){
-			const match = Bcoeff.match(/(\/)(\d+)/)// ищет "/100"
+			const match  =  Bcoeff.match(/(\/)(\d+)/)// ищет "/100"
 			const match1 = Bcoeff.match(/(?<!\()\-(\d+)/);// ищет "-100"
 			const match2 = Bcoeff.match(/\*\((-\d+)\)/);// ищет "*(-100) (/\*\(\-(\d+)\)/)
 			const match3 = Bcoeff.match( /\\*\\-(\\d+)/)  // ищет "*-100"
@@ -414,7 +415,7 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 		if (match2) {
 			console.log('s')
 		   const number = parseInt(match2[1], 10);
-		console.log(number)
+		
 		     if (!isNaN(number)) {
 				console.log(number)	   
 		 return  B * (-number);
@@ -1045,6 +1046,17 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 	}
   };
 
+const handleDeleteSelected = () => {
+	const rowsFilt = rows.map((cell) => cell.original)
+   
+	const selectedIds = selectedRows.map((row) => row.id);
+	console.log(selectedIds)
+	setTableData((prevData : any) => {
+        const updatedData = prevData.filter((item:any) => !selectedIds.includes(item.id));
+        return updatedData;
+      });
+
+} 
   //вставка данных
   
   const handlePaste = () => {
@@ -1116,6 +1128,7 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 
   return (
     <div>
+		 <button onClick={handleDeleteSelected} style={{ height: '34px',width: '20px',marginLeft: '5px'}}> <Delete/></button>    
          <button onClick={handlePaste} style={{ margin: '10px'}}>Вставить</button>    
         <button onClick={handleAddRow} style={{margin: '10px' }}>Добавить строку</button>
         <button onClick={handleCopy} style={{ margin: '10px'}}>Скопировать</button>

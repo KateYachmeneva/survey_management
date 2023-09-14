@@ -424,3 +424,24 @@ export const Sort: React.FC<IIcon> = () => {
   );
 };
 
+export const Delete: React.FC<IIcon> = () => {
+  return (
+    <svg
+      width="30"
+      height="30"
+      viewBox="0 0 25 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="password-eye"
+      transform="translate(23, 0)"
+      baseProfile="tiny" 
+    >
+      {/* <circle cx="30" cy="30" r="30" fill="#F6F7F9" /> */}
+          <path d="M0.833333 13.3333C0.833333 14.25 1.58333 15 2.5 15H9.16667C10.0833 15 10.8333 14.25 10.8333 13.3333V3.33333H0.833333V13.3333ZM11.6667 0.833333H8.75L7.91667 0H3.75L2.91667 0.833333H0V2.5H11.6667V0.833333Z" 
+          fill="#1F50BA"
+         
+        />
+       
+    </svg>
+  );
+};

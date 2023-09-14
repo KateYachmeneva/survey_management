@@ -95,7 +95,7 @@ const WellData = () => {
   // Обновляем состояние form при получении новых coefficients
 
   useEffect(() => {
-    const { device_title, CX, CY, CZ, BX, BY, BZ } = coeff;
+    const { CX, CY, CZ, BX, BY, BZ } = coeff;
 
    
     if (coeff.device_title) {

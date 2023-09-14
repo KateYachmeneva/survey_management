@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Input from "../../ui-kit/input";
 import { Form } from "../../ui-kit/form/Form";
 import { toaster } from "evergreen-ui";
@@ -8,7 +8,6 @@ import { closeModal } from "../../services/slices/modalSlice";
 import useForm from "../../hooks/useForm";
 import styles from "./modal.module.scss";
 
-type InputEvent = React.ChangeEvent<HTMLInputElement>;
 
 const ContractorAddModal: React.FC = () => {
   const { values, handleChange, setValues } = useForm({
