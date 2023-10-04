@@ -34,14 +34,17 @@ interface DataRow {
 	Azimut_Grid?:any;
 	comment:any;
 	instatistics?:any;
-	// isSorted?:any;
-	// Add other properties as needed
+  }
+  interface WellTableProps {
+	coefficients: any;
+	axes: any; 
+	rawaxes: any;
+	selectRun: any;
   }
 
-//({selectRun, selectWell}: { selectRun: any; selectWell: any;}) 
-export const WellTable  =  ({coefficients} :{coefficients:any}) => {
+export const WellTable: React.FC<WellTableProps> = ({ coefficients, axes, rawaxes})=> {
+	
 	const {dec,grid_convergence} = useSelector((store) =>store.wells.currentWell)
-
 	if (Object.keys(coefficients).length === 0 ) {
 		coefficients = 	{
 			   "device_title": "_",
@@ -53,7 +56,33 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 		        "BZ": "+0"
 		}
 	}
+	
+// Функция для добавления данных из rawaxes в axes на основе id
 
+
+  const [dataComb,setDataComb] = useState<RowDataItem[]>([]);
+  useEffect (()=>{
+	function addDataFromRawAxes(axes: any[], rawaxes: any) {
+		let dataCombined = []
+		for (const rawItem of rawaxes) {
+		  const matchingAxis = axes.find((axis: { id: any; }) => axis.id === rawItem.id);
+		  const matchingRawAxis = rawaxes.find((axis: { id: any; }) => axis.id === rawItem.id)
+		  if (matchingAxis) {
+			const updatedObject = { ...matchingAxis, CX_raw:  matchingRawAxis.CX_raw,  CY_raw:  matchingRawAxis.CY_raw, CZ_raw:  matchingRawAxis.CZ_raw,BX_raw:  matchingRawAxis.BX_raw,  BY_raw:  matchingRawAxis.BY_raw, BZ_raw:  matchingRawAxis.BZ_raw  };
+			dataCombined.push(updatedObject)
+			
+		  }
+		
+		}
+		return dataCombined
+	
+	
+	  }
+	let dataCombined = addDataFromRawAxes(axes, rawaxes);
+	setDataComb(dataCombined) 
+ },[axes,rawaxes])
+  // Вызываем функцию для добавления данных
+console.log(dataComb)
 	let CXcoeff = coefficients.CX
 	let CYcoeff = coefficients.CY
 	let CZcoeff = coefficients.CZ
@@ -62,220 +91,8 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 	let BZcoeff = coefficients.BZ
 
 	const preData = React.useMemo(
-       () => [
-		{
-			"id": 4093,
-			"depth": 2544.7,
-			"CX_raw": 0.458,
-			"CY_raw": 0.6045,
-			"CZ_raw": 0.6523,
-			"BX_raw": -0.37740,
-			"BY_raw": -0.32280,
-			"BZ_raw": 0.315400,
-			"CX": 0.458,
-			"CY": 0.6045,
-			"CZ": 0.6523,
-			"BX": 37740.0,
-			"BY": 32280.0,
-			"BZ": 31540.0,
-			"Btotal_corr": 58830.1,
-			"DIP_corr": 77.112,
-			"in_statistics": true,
-			"comment": null,
-			"run": 82
-		},
-		{
-			"id": 4094,
-			"depth": 2562.9,
-			"CX_raw": 0.7471,
-			"CY_raw": -0.1123,
-			"CZ_raw": 0.6563,
-			"BX_raw": -0.47120,
-			"BY_raw": 0.17970,
-			"BZ_raw": 0.31590,
-			"CX": 0.7471,
-			"CY": -0.1123,
-			"CZ": 0.6563,
-			"BX": 47120.0,
-			"BY": -17970.0,
-			"BZ": 31590.0,
-			"Btotal_corr": 59414.7,
-			"DIP_corr": 76.595,
-			"in_statistics": true,
-			"comment": null,
-			"run": 82
-		},
-		{
-			"id": 4095,
-			"depth": 2581.4,
-			"CX_raw":-0.4178,
-			"CY_raw":0.607,
-			"CZ_raw":0.6755,
-			"BX_raw":0.18980,
-			"BY_raw":-0.45780,
-			"BZ_raw":0.32710,
-			"CX": -0.4178,
-			"CY": 0.607,
-			"CZ": 0.6755,
-			"BX": -18980.0,
-			"BY": 45780.0,
-			"BZ": 32710.0,
-			"Btotal_corr": 59239.3,
-			"DIP_corr": 76.744,
-			"in_statistics": true,
-			"comment": null,
-			"run": 82
-		},
-		{
-			"id": 4096,
-			"depth": 2599.9,
-			"CX_raw": -0.3814,
-			"CY_raw": 0.6162,
-			"CZ_raw": 0.6895,
-			"BX_raw": 0.17010,
-			"BY_raw": -0.46220,
-			"BZ_raw": 0.33210,
-			"CX": -0.3814,
-			"CY": 0.6162,
-			"CZ": 0.6895,
-			"BX": -17010.0,
-			"BY": 46220.0,
-			"BZ": 33210.0,
-			"Btotal_corr": 59256.8,
-			"DIP_corr": 76.727,
-			"in_statistics": true,
-			"comment": null,
-			"run": 82
-		},
-		{
-			"id": 4097,
-			"depth": 2618.31,
-			"CX_raw":-0.6005,
-			"CY_raw":0.3115,
-			"CZ_raw":0.734,
-			"BX_raw":0.36380,
-			"BY_raw":-0.29770,
-			"BZ_raw":0.36280,
-			"CX": -0.6005,
-			"CY": 0.3115,
-			"CZ": 0.734,
-			"BX": -36380.0,
-			"BY": 29770.0,
-			"BZ": 36280.0,
-			"Btotal_corr": 59194.9,
-			"DIP_corr": 76.797,
-			"in_statistics": true,
-			"comment": null,
-			"run": 82
-		},	
-		{
-			"id": 4100,
-			"depth": 2673.35,
-			"CX_raw":0.1857,
-			"CY_raw":0.4691,
-			"CZ_raw":0.8634,
-			"BX_raw":-0.22830,
-			"BY_raw":-0.31230,
-			"BZ_raw":0.45430,
-			"CX": 0.1857,
-			"CY": 0.4691,
-			"CZ": 0.8634,
-			"BX": 22830,
-			"BY": 31230,
-			"BZ": 45430,
-			"Btotal_corr": 59347.5,
-			"DIP_corr": 76.67,
-			"in_statistics": true,
-			"comment": null,
-			"run": 82
-		  },
-	{
-			"id": 4179,
-			"depth": 3583.4,
-			"CX_raw": 0.62818,
-			"CY_raw": -0.77824,
-			"CZ_raw": -0.00332,
-			"BX_raw": -0.30169,
-			"BY_raw": 0.49652,
-			"BZ_raw": -0.11113,
-		    "CX": 0.62818,
-			"CY": -0.77824,
-			"CZ": -0.00332,
-			"BX": 30169.0,
-			"BY": -49652.0,
-			"BZ": -11113.0,
-			"Btotal_corr": 59372.0,
-			"DIP_corr": 76.579,
-			"in_statistics": true,
-			"comment": null,
-			"run": 82
-		},
-		{
-			"id": 4180,
-			"depth": 3592.4,
-			"CX_raw": 0.3309,
-			"CY_raw": 0.94263,
-			"CZ_raw": -0.00471,
-			"BX_raw": -0.26456,
-			"BY_raw": -0.51797,
-			"BZ_raw": -0.11090,
-			"CX": 0.3309,
-			"CY": 0.94263,
-			"CZ": -0.00471,
-			"BX": 26456.0,
-			"BY": 51797.0,
-			"BZ": -11090.0,
-			"Btotal_corr": 59453.0,
-			"DIP_corr": 76.609,
-			"in_statistics": true,
-			"comment": null,
-			"run": 82
-		},
-		{
-			"id": 4181,
-			"depth": 3601.8,
-			"CX_raw": -0.14062,
-			"CY_raw": 0.98926,
-			"CZ_raw": -0.01562,
-			"BX_raw": 0.00488,
-			"BY_raw": -0.57959,
-			"BZ_raw": -0.11816,
-			"CX": -0.14062,
-			"CY": 0.98926,
-			"CZ": -0.01562,
-			"BX": -488.0,
-			"BY": 57959.0,
-			"BZ": -11816.0,
-			"Btotal_corr": 59396.0,
-			"DIP_corr": 76.602,
-			"in_statistics": true,
-			"comment": null,
-			"run": 82
-		},
-
-		{
-			"id": 4183,
-			"depth": 3620.5,
-			"CX_raw":  0.95508,
-			"CY_raw":  -0.29492,
-			"CZ_raw":  -0.02246,
-			"BX_raw":  -0.52490,
-			"BY_raw":  0.24219,
-			"BZ_raw":  -0.12207,
-			"CX": 0.95508,
-			"CY": -0.29492,
-			"CZ": -0.02246,
-			"BX": 52490.0,
-			"BY": -24219.0,
-			"BZ": -12207.0,
-			"Btotal_corr": 59345.0,
-			"DIP_corr": 76.613,
-			"in_statistics": true,
-			"comment": null,
-			"run": 82
-		}
-		],
-		[]
+       () => dataComb,
+		[dataComb]
 	  )	
 	
 		
@@ -294,8 +111,7 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 			const number = parseInt(match[2], 10);
 		
 			if (!isNaN(number)) {
-				console.log(number)   
-			  return G / number;
+				  return G / number;
 																													  
 			}
 		}
@@ -303,7 +119,7 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 	  		const number = parseInt(match1[1], 10);
 				
 			 if (!isNaN(number)) {
-				console.log(number) 	 
+			
 		   return  G * (-number);
 																													   
 		 } else {
@@ -315,8 +131,7 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 		const number = parseInt(match2[1], 10);
      
         if (!isNaN(number)) {
-     		console.log(number)   
-      return  G * (-number);
+           return  G * (-number);
      																											 
      } else {
       return ""
@@ -327,7 +142,7 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 		const number = parseInt(match3[1], 10);
 		
 	 if (!isNaN(number)) {
-		console.log(number) 	 
+	 
 	   return  G * (-number);
 																												   
 	 }
@@ -337,7 +152,7 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 	const number = parseFloat(match4[1])
 	
     if (!isNaN(number)) {
-   	  console.log(number) 	 
+   	  	 
       return  G / (number);
      }
    }
@@ -356,8 +171,6 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 	const number = parseFloat(match6[2]);
 	
    if (!isNaN(number)) {
-	console.log(number)
-	console.log(G)
    return  G / (-number);
 																											   
    }
@@ -493,6 +306,7 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 	   }
 
 	function calculateDIP(CX:any, CY:any, CZ:any,BX:any, BY:any, BZ:any) {
+
 		function degrees(radians:any) {
 			return radians * (180 / Math.PI);
 		}
@@ -500,8 +314,7 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 		const dotProduct = CX * BX + CY * BY + CZ * BZ;
 		const magnitudeC = Math.sqrt(CX ** 2 + CY ** 2 + CZ ** 2);
 		const magnitudeB = Math.sqrt(BX ** 2 + BY ** 2 + BZ ** 2);
-	
-		const angleInRadians = Math.asin(dotProduct / (magnitudeC * magnitudeB));
+	    const angleInRadians = Math.asin(dotProduct / (magnitudeC * magnitudeB));
 		const angleInDegrees = degrees(angleInRadians);
 	
 		return Math.abs(Math.round(angleInDegrees * 100) / 100);
@@ -1048,9 +861,8 @@ export const WellTable  =  ({coefficients} :{coefficients:any}) => {
 
 const handleDeleteSelected = () => {
 	const rowsFilt = rows.map((cell) => cell.original)
-   
-	const selectedIds = selectedRows.map((row) => row.id);
-	console.log(selectedIds)
+    const selectedIds = selectedRows.map((row) => row.id);
+
 	setTableData((prevData : any) => {
         const updatedData = prevData.filter((item:any) => !selectedIds.includes(item.id));
         return updatedData;

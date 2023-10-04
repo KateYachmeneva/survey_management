@@ -11,6 +11,7 @@ import customersSlice from "../slices/customersSlice";
 import rigSlice from "../slices/rigSlice";
 import runSlice from "../slices/runSlice";
 import fieldSlice from "../slices/fieldSlice";
+import axesSlice from "../slices/axesSlice";
 
 export const rootReducer = combineReducers({
   userData: userSlice,
@@ -25,6 +26,7 @@ export const rootReducer = combineReducers({
   customers: customersSlice,
   rigs: rigSlice,
   runs: runSlice,
+  axes: axesSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

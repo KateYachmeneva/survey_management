@@ -10,6 +10,7 @@ import styles from "./well-info.module.scss";
 import WellNavbar from "./navbar/WellNavbar";
 import { selectActiveDataWell } from "../../services/slices/wellsSlice";
 import { selectActiveRun, getRun} from "../../services/slices/runSlice";
+import { getRawAxes, getAxes} from "../../services/slices/axesSlice";
 import DropDown from "./DropDown/DropDown";
 import { getCoefficients } from "../../services/slices/runSlice";
 import InputSmall from "../../ui-kit/input/InputSmall";
@@ -21,7 +22,6 @@ interface IForm {
   CX: string;
   CY: string;
   CZ: string;
-
   BX: string;
   BY: string;
   BZ: string;
@@ -42,9 +42,10 @@ const WellData = () => {
   const { allWells } = useSelector((store) => store.wells)
   const {allTelesystems} = useSelector ((store) => store.runs)
   const [value, setValue] = useState("");
+  const { axes,rawaxes } = useSelector((store) => store.axes)
   const { currentRun } = useSelector((store) => store.runs)
-  const dispatch = useDispatch();
   const location = useLocation();
+  const dispatch = useDispatch();
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const { allRuns } = useSelector((store) => store.runs);
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
@@ -75,6 +76,8 @@ const WellData = () => {
     id: item.id,
     device_title: item.device_title,
   }));
+
+
 
   useEffect(() => {
     if (wellId) {
@@ -111,18 +114,6 @@ const WellData = () => {
 
       setCoefficientsLoaded(true); // Устанавливаем флаг, что коэффициенты загружены
     }
-    // if (typeof coeff.device_title == "undefined") {
-    //   setForm({
-    //     device_title: "",
-    //     CX: "",
-    //     CY: "",
-    //     CZ: "",
-    //     BX: "",
-    //     BY: "",
-    //     BZ: "",
-    //   });
-    //   setCoefficientsLoaded(true);
-    // }
   }, [coeff,coefficientsLoaded]);
   const [inputValues, setInputValues] = useState<InputValues>({
     device_title: '_',
@@ -153,7 +144,6 @@ const WellData = () => {
   );
   
   setInputValues(newInputValues);
-  console.log(isSubmCoef)
   setIsSubmCoef(true)
   };
 
@@ -239,12 +229,14 @@ const WellData = () => {
     dispatch(selectActiveRun(selectedRun));
     if (selectedRun) {
       const id = selectedRun.id;
-      console.log (id)
-     dispatch(getCoefficients(id));
-     }
+      dispatch(getCoefficients(id));
+      dispatch(getRawAxes(id));
+      dispatch(getAxes(id))
+          }
   };
   
-
+  console.log(axes);
+  console.log(rawaxes)
   return (
     <>
       <WellNavbar />
@@ -355,9 +347,10 @@ const WellData = () => {
           />
         </FormCoeff>
         <WellTable
-          // selectRun={currentRun}
-          // selectWell={currentWell}
-           coefficients={coeff}
+          axes={axes}
+          rawaxes = {rawaxes}
+          coefficients={coeff}
+          selectRun={currentRun}
         />
            </div>}
         </div>

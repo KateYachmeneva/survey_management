@@ -1,6 +1,7 @@
 import { TRegisterUserResponse } from "../services/slices/registerSlice";
 import { TGetUserInfo } from "../services/slices/userSlice";
 import { IRigData } from "../services/slices/rigSlice";
+import { IAxesData,IRawAxesData } from "../services/slices/axesSlice";
 import { IRunData } from "../services/slices/runSlice";
 import { ICoeffData,TelesystemData } from "../services/slices/runSlice";
 import {
@@ -15,8 +16,8 @@ import { fetchWithRefresh, getCookie } from "../utils";
 import { TUserRegister } from "../types";
 
 export const API_URL_NEW: string = `http://localhost:8000/main_data/api`;
-export const API_URL: string = `http://10.23.125.230:9613/main_data/api`;
-export const API_URL_AXES: string = `http://10.23.125.230:9613/axes/api`;
+export const API_URL: string = `http://10.23.125.230:9696/main_data/api`;
+export const API_URL_AXES: string = `http://10.23.125.230:9696/axes/api`;
 
 const HEADERS: HeadersInit = {
   "Content-Type": "application/json",
@@ -84,15 +85,7 @@ export const logoutUserRequesrApi = () => {
   });
 };
 
-// export const getUserDataApi = () => {
-//   return fetchWithRefresh<TGetUserInfo>(`${API_URL}/users/profile/`, {
-//     method: "GET",
-//     headers: {
-//       "Content-Type": "application/json;charger=utf-8",
-//       Authorization: "Bearer " + getCookie("Token"),
-//     },
-//   })
-// }
+
 
 export const getContractorsRequestApi = () => {
   return apiRequest<IContractorsResponse[]>(`${API_URL}/contractorNNB`, {
@@ -195,6 +188,22 @@ export const getWellsRequestApi = () => {
 
 export const getCustomersRequestApi = () => {
   return apiRequest<ICustomerData[]>(`${API_URL}/client`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json;charger=utf-8",
+    },
+  });
+};
+export const getAxesApi = (id: number) => {
+  return apiRequest<IAxesData>(`${API_URL_AXES}/meas/run/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json;charger=utf-8",
+    },
+  });
+};
+export const getRawAxesApi = (id:number) => {
+  return apiRequest<IRawAxesData>(`${API_URL_AXES}/raw_meas/run/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json;charger=utf-8",
